@@ -5,6 +5,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 // telas
 import Login from "./src/screens/login";
+import  Feed  from "./src/screens/feed";
 import Register from "./src/screens/register";
 
 
