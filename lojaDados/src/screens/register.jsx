@@ -1,40 +1,69 @@
-import React from "react";
+import { useState } from "react";
 import {
   View,
   TextInput,
   Text,
   StyleSheet,
   TouchableOpacity,
-  TextInputBase,
+  Alert,
 } from "react-native";
+import { auth } from "../services/firebase";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
-const Register = () => {
+const Register = ({ navigation }) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleRegister = async () => {
+    if (!email || !password) {
+      Alert.alert("Erro", "Preencha todos os campos.");
+      return;
+    }
+
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
+      Alert.alert("Sucesso", "Usuário registrado com sucesso!");
+      navigation.navigate("Login");
+    } catch (error) {
+      Alert.alert("Erro ao registrar", error.message);
+    }
+  };
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Resgistrar-se</Text>
+      <Text style={styles.title}>Registrar-se</Text>
+
       <TextInput
         style={styles.input}
         placeholder="Email"
         placeholderTextColor="#999"
         keyboardType="email-address"
+        autoCapitalize="none"
+        value={email}
+        onChangeText={setEmail}
       />
+
       <TextInput
         style={styles.input}
         placeholder="Senha"
         placeholderTextColor="#999"
-        secureTextEntry={true}
+        secureTextEntry
+        value={password}
+        onChangeText={setPassword}
       />
 
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress={handleRegister}>
         <Text style={styles.buttonText}>Criar conta</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.linkButton}>
-        <Text style={styles.linkText}>Ja tem uma conta?</Text>
+      <TouchableOpacity onPress={() => navigation.navigate("Login")}>
+        <Text style={styles.link}>Já tem uma conta? Faça login</Text>
       </TouchableOpacity>
     </View>
   );
 };
+
+export default Register;
 
 const styles = StyleSheet.create({
   container: {
@@ -43,7 +72,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     paddingHorizontal: 30,
   },
-
   title: {
     fontSize: 28,
     fontWeight: "bold",
@@ -51,7 +79,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "#f4f4f4",
   },
-
   input: {
     height: 48,
     borderRadius: 8,
@@ -60,8 +87,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     paddingHorizontal: 15,
     marginBottom: 15,
+    color: "#fff",
   },
-
   button: {
     backgroundColor: "#4A90E2",
     borderRadius: 8,
@@ -73,14 +100,11 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#333",
     fontSize: 16,
-    margin: 5,
   },
-
-  linkText: {
+  link: {
     color: "#4A90E2",
     textAlign: "center",
     fontSize: 15,
+    textDecorationLine: "underline",
   },
 });
-
-export default Register;
