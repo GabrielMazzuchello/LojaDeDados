@@ -7,14 +7,5 @@ import Register from "./src/screens/register";
 
 export default function App() {
   // return <Register />;
-  return <Login />;
+  return <Feed/>//<Login />;
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#ff555f",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
