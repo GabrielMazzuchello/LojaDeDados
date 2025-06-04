@@ -1,6 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import Login from "./src/screens/login";
+import  Feed  from "./src/screens/feed";
 
 export default function App() {
   return <Login />;
@@ -9,7 +10,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#ff555f",
     alignItems: "center",
     justifyContent: "center",
   },
