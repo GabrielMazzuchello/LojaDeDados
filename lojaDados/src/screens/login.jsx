@@ -1,13 +1,34 @@
-import React from "react";
+import { useState } from "react";
 import {
   View,
   TextInput,
   Text,
   StyleSheet,
   TouchableOpacity,
+  Alert,
 } from "react-native";
+import { auth } from "../services/firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
-const Login = () => {
+const Login = ({ navigation }) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = async () => {
+    if (!email || !password) {
+      Alert.alert("Erro, Preencha todos os campos");
+      return;
+    }
+
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      Alert.alert("Logado com sucesso");
+      // navigation.navigate("Home"); Adicionar no futuro
+    } catch (error) {
+      Alert.alert("Erro ao logar, " + error.message);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Login</Text>
@@ -17,6 +38,8 @@ const Login = () => {
         placeholder="Email"
         placeholderTextColor="#999"
         keyboardType="email-address"
+        value={email}
+        onChangeText={setEmail}
       />
 
       <TextInput
@@ -24,13 +47,15 @@ const Login = () => {
         placeholder="Senha"
         placeholderTextColor="#999"
         secureTextEntry={true}
+        value={password}
+        onChangeText={setPassword}
       />
 
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress={handleLogin}>
         <Text style={styles.buttonText}>Entrar</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate("register")}>
         <Text style={styles.linkText}>Cadastrar-se</Text>
       </TouchableOpacity>
     </View>
