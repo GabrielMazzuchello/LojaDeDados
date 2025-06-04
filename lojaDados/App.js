@@ -1,22 +1,23 @@
 
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import Product from './src/screens/products';  //ESSA LINHA VAI PARA O CARALHO
+import "react-native-gesture-handler";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+
+// telas
 import Login from "./src/screens/login";
+import Register from "./src/screens/register";
 
 
 export default function App() {
-  // return <Login />;
-  return (
-    <Product/>
-  )
-}
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
+  const Stack = createStackNavigator();
+
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="register" component={Register} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}

@@ -8,36 +8,37 @@ import {
   Alert,
 } from "react-native";
 import { auth } from "../services/firebase";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
-const Login = ({ navigation }) => {
+const Register = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = async () => {
+  const handleRegister = async () => {
     if (!email || !password) {
-      Alert.alert("Erro, Preencha todos os campos");
+      Alert.alert("Erro", "Preencha todos os campos.");
       return;
     }
 
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      Alert.alert("Logado com sucesso");
-      // navigation.navigate("Home"); Adicionar no futuro
+      await createUserWithEmailAndPassword(auth, email, password);
+      Alert.alert("Sucesso", "Usuário registrado com sucesso!");
+      navigation.navigate("Login");
     } catch (error) {
-      Alert.alert("Erro ao logar, " + error.message);
+      Alert.alert("Erro ao registrar", error.message);
     }
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Login</Text>
+      <Text style={styles.title}>Registrar-se</Text>
 
       <TextInput
         style={styles.input}
         placeholder="Email"
         placeholderTextColor="#999"
         keyboardType="email-address"
+        autoCapitalize="none"
         value={email}
         onChangeText={setEmail}
       />
@@ -46,23 +47,23 @@ const Login = ({ navigation }) => {
         style={styles.input}
         placeholder="Senha"
         placeholderTextColor="#999"
-        secureTextEntry={true}
+        secureTextEntry
         value={password}
         onChangeText={setPassword}
       />
 
-      <TouchableOpacity style={styles.button} onPress={handleLogin}>
-        <Text style={styles.buttonText}>Entrar</Text>
+      <TouchableOpacity style={styles.button} onPress={handleRegister}>
+        <Text style={styles.buttonText}>Criar conta</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => navigation.navigate("register")}>
-        <Text style={styles.linkText}>Cadastrar-se</Text>
+      <TouchableOpacity onPress={() => navigation.navigate("Login")}>
+        <Text style={styles.link}>Já tem uma conta? Faça login</Text>
       </TouchableOpacity>
     </View>
   );
 };
 
-export default Login;
+export default Register;
 
 const styles = StyleSheet.create({
   container: {
@@ -80,29 +81,30 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 48,
-    backgroundColor: "#222",
     borderRadius: 8,
-    paddingHorizontal: 15,
-    marginBottom: 20,
-    borderWidth: 1,
+    backgroundColor: "#222",
     borderColor: "#ddd",
+    borderWidth: 1,
+    paddingHorizontal: 15,
+    marginBottom: 15,
+    color: "#fff",
   },
   button: {
     backgroundColor: "#4A90E2",
-    paddingVertical: 14,
     borderRadius: 8,
     alignItems: "center",
+    paddingVertical: 14,
     marginBottom: 15,
-    color: "#333",
   },
   buttonText: {
-    color: "#333",
     fontWeight: "bold",
+    color: "#333",
     fontSize: 16,
   },
-  linkText: {
+  link: {
     color: "#4A90E2",
     textAlign: "center",
     fontSize: 15,
+    textDecorationLine: "underline",
   },
 });
