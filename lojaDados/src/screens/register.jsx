@@ -5,20 +5,19 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
+  TextInputBase,
 } from "react-native";
 
-const Login = () => {
+const Register = () => {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Login</Text>
-
+      <Text style={styles.title}>Resgistrar-se</Text>
       <TextInput
         style={styles.input}
         placeholder="Email"
         placeholderTextColor="#999"
         keyboardType="email-address"
       />
-
       <TextInput
         style={styles.input}
         placeholder="Senha"
@@ -27,17 +26,15 @@ const Login = () => {
       />
 
       <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>Entrar</Text>
+        <Text style={styles.buttonText}>Criar conta</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity>
-        <Text style={styles.linkText}>Cadastrar-se</Text>
+      <TouchableOpacity style={styles.linkButton}>
+        <Text style={styles.linkText}>Ja tem uma conta?</Text>
       </TouchableOpacity>
     </View>
   );
 };
-
-export default Login;
 
 const styles = StyleSheet.create({
   container: {
@@ -46,6 +43,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     paddingHorizontal: 30,
   },
+
   title: {
     fontSize: 28,
     fontWeight: "bold",
@@ -53,31 +51,36 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "#f4f4f4",
   },
+
   input: {
     height: 48,
-    backgroundColor: "#222",
     borderRadius: 8,
-    paddingHorizontal: 15,
-    marginBottom: 20,
-    borderWidth: 1,
+    backgroundColor: "#222",
     borderColor: "#ddd",
+    borderWidth: 1,
+    paddingHorizontal: 15,
+    marginBottom: 15,
   },
+
   button: {
     backgroundColor: "#4A90E2",
-    paddingVertical: 14,
     borderRadius: 8,
     alignItems: "center",
+    paddingVertical: 14,
     marginBottom: 15,
-    color: "#333",
   },
   buttonText: {
-    color: "#333",
     fontWeight: "bold",
+    color: "#333",
     fontSize: 16,
+    margin: 5,
   },
+
   linkText: {
     color: "#4A90E2",
     textAlign: "center",
     fontSize: 15,
   },
 });
+
+export default Register;
