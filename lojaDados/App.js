@@ -2,14 +2,14 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import Product from './src/screens/products';  //ESSA LINHA VAI PARA O CARALHO
-
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
 import Login from "./src/screens/login";
 
 
 export default function App() {
-  return <Login />;
+  // return <Login />;
+  return (
+    <Product/>
+  )
 }
 
 const styles = StyleSheet.create({
