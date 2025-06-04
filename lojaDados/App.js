@@ -1,5 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import Product from './src/screens/products';  //ESSA LINHA VAI PARA O CARALHO
 
 export default function App() {
   return (
