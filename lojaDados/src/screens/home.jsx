@@ -12,7 +12,7 @@ export default function Home({navigation}) {
                     </TouchableOpacity>
                 </View>
                 <View style = {styles.divisionTopPage2}>
-                    <Image style = {styles.img} source = {{uri: 'https://media.tenor.com/olk7lEobPJMAAAAM/minecraft-buff-steve.gif' }}/>
+                    <Image style={styles.img} source={require("../../assets/imagens/sus.png")}></Image>
                 </View>
                 <View style = {styles.divisionTopPage1}>
                     <TouchableOpacity  onPress={() => navigation.navigate("Home")}>
@@ -107,10 +107,10 @@ const styles = StyleSheet.create({
     },
     aboutButtons: {
         width: 300,
-        backgroundColor: "#555",
+        backgroundColor: "#121219",
         fontSize: 20,
         textAlign: "center",
         borderRadius: 7,
-        color: "#700"
+        color: "#FF0068"
     },
 })

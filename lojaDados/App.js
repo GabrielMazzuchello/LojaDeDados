@@ -10,6 +10,8 @@ import Feed from "./src/screens/feed";
 import Register from "./src/screens/register";
 import Home from "./src/screens/home";
 
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+
 const Stack = createStackNavigator();
 const Tabs = createBottomTabNavigator();
 
@@ -17,14 +19,13 @@ function HomeTabs() {
   return (
     <Tabs.Navigator
       screenOptions={{
-        tabBarActiveBackgroundColor: "#000",
-        tabBarActiveTintColor: "#a11",
-        tabBarInactiveTintColor: "#ffff",
-        tabBarInactiveBackgroundColor: "#0005",
+        tabBarActiveBackgroundColor: "#a14",
+        tabBarActiveTintColor: "#ffff",
+        tabBarInactiveTintColor: "#FF0068",
+        tabBarInactiveBackgroundColor: "#001",
         headerShown: false,
-        headerStyle: { backgroundColor: "#a11" },
+        headerStyle: { backgroundColor: "#a14" },
         headerTitleAlign: "center",
-        tabBarBadge: 6,
         tabBarStyle: {
           backgroundColor: "red", // Cor de fundo da barra de abas
           borderTopWidth: 0, // Remove a borda superior
@@ -34,8 +35,18 @@ function HomeTabs() {
         },
       }}
     >
-      <Tabs.Screen name="Home" component={Home} />
-      <Tabs.Screen name="Feed" component={Feed} />
+      <Tabs.Screen name="Home" component={Home} 
+      options={{
+        tabBarIcon: () => (
+          <MaterialIcons name='home' size={32} color={'#FF0068'}/>
+        ),
+      }}/>
+      <Tabs.Screen name="Feed" component={Feed} 
+      options={{
+        tabBarIcon: () => (
+          <MaterialIcons name="feed" size={32} color={'#FF0068'}/>
+        ),
+      }}/>
     </Tabs.Navigator>
   );
 }
