@@ -3,13 +3,13 @@ import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCtubdq8wj5hWohIkuV6pSf2VQe1D9lZIQ",
-  authDomain: "aulasm2025-b892f.firebaseapp.com",
-  projectId: "aulasm2025-b892f",
-  storageBucket: "aulasm2025-b892f.appspot.com",
-  messagingSenderId: "618683157576",
-  appId: "1:618683157576:web:1e28c8b0375beaf24cdc7d",
-  measurementId: "G-0QP7KLBW2R",
+  apiKey: "AIzaSyC0hyCRlEewfXrhlmUKLeo9eOuGSPwP9f0",
+  authDomain: "sessoesrpg-2025.firebaseapp.com",
+  projectId: "sessoesrpg-2025",
+  storageBucket: "sessoesrpg-2025.firebasestorage.app",
+  messagingSenderId: "95009760776",
+  appId: "1:95009760776:web:cade0a06a157bea431d3bd",
+  measurementId: "G-6LPXCCV5MX"
 };
 
 const app = initializeApp(firebaseConfig);
