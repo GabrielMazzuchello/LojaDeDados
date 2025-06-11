@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
   },
   title: {
-    fontSize: 28,
+    fontSize: 35,
     fontWeight: "bold",
     marginBottom: 40,
     textAlign: "center",
