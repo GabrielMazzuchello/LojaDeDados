@@ -23,7 +23,7 @@ const Login = ({ navigation }) => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
       Alert.alert("Logado com sucesso");
-      // navigation.navigate("Home"); Adicionar no futuro
+      navigation.navigate("Home"); 
     } catch (error) {
       Alert.alert("Erro ao logar, " + error.message);
     }

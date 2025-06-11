@@ -7,6 +7,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import Login from "./src/screens/login";
 import  Feed  from "./src/screens/feed";
 import Register from "./src/screens/register";
+import Home from "./src/screens/home";
 
 
 export default function App() {
@@ -17,7 +18,9 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name="register" component={Register} />
+        <Stack.Screen name="Register" component={Register} />
+        <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="Feed" component={Feed} />
       </Stack.Navigator>
     </NavigationContainer>
   );

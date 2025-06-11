@@ -1,12 +1,12 @@
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image } from "react-native";
 import { useEffect, useState } from "react";
 
-export default function Product({navigation}) {
+export default function Home({navigation}) {
     return (
         <View style = {styles.container}>
             <View style = {styles.topPage}>
                 <View style = {styles.divisionTopPage1}>
-                    <TouchableOpacity onPress={() => navigation.navigate("Product")}>
+                    <TouchableOpacity onPress={() => navigation.navigate("Home")}>
                         <Text style = {styles.button}>Agendar Sessões</Text> 
                                 {/* esse botao so aparece se usar login de ADM */}
                     </TouchableOpacity>
@@ -15,7 +15,7 @@ export default function Product({navigation}) {
                     <Image style = {styles.img} source = {{uri: 'https://media.tenor.com/olk7lEobPJMAAAAM/minecraft-buff-steve.gif' }}/>
                 </View>
                 <View style = {styles.divisionTopPage1}>
-                    <TouchableOpacity  onPress={() => navigation.navigate("Product")}>
+                    <TouchableOpacity  onPress={() => navigation.navigate("Home")}>
                         <Image style = {styles.cart} source = {{uri: 'https://media.tenor.com/olk7lEobPJMAAAAM/minecraft-buff-steve.gif' }}/>
                     </TouchableOpacity>
                     <Text style={{ color: '#FF0068' }}>Sessões</Text>
@@ -42,7 +42,7 @@ export default function Product({navigation}) {
                     <Text style = {styles.aboutButtons}>Alguma coisa não definida depois que a sora quebrou nosso projeto</Text>
                 </TouchableOpacity>  
 
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.navigate("Feed")}>
                     <Text style = {styles.aboutButtons}>Sobre nós</Text>
                 </TouchableOpacity>
             </View> 
