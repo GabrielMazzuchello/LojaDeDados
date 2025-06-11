@@ -83,7 +83,7 @@ export default function App() {
       <Stack.Navigator>
         <Stack.Screen
           name="Login"
-          component={Login}
+          component={Home}
           options={{
             headerStyle: {
               backgroundColor: "#000000",

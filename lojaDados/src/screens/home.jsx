@@ -6,7 +6,7 @@ export default function Home({navigation}) {
         <View style = {styles.container}>
             <View style = {styles.topPage}>
                 <View style = {styles.divisionTopPage1}>
-                    <TouchableOpacity onPress={() => navigation.navigate("Home")}>
+                    <TouchableOpacity onPress={() => navigation.navigate(" ")}>
                         <Text style = {styles.button}>Agendar Sessões</Text> 
                                 {/* esse botao so aparece se usar login de ADM */}
                     </TouchableOpacity>
