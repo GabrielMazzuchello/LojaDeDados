@@ -15,6 +15,8 @@ const Register = ({ navigation }) => {
   const [password, setPassword] = useState("");
 
   const handleRegister = async () => {
+    console.log("Botão Criar Conta pressionado");
+
     if (!email || !password) {
       Alert.alert("Erro", "Preencha todos os campos.");
       return;
@@ -23,9 +25,11 @@ const Register = ({ navigation }) => {
     try {
       await createUserWithEmailAndPassword(auth, email, password);
       Alert.alert("Sucesso", "Usuário registrado com sucesso!");
+      console.log("Sucesso", "Usuário registrado com sucesso!");
       navigation.navigate("Login");
     } catch (error) {
       Alert.alert("Erro ao registrar", error.message);
+      console.log("Erro ao criar conta:", error.code, error.message);
     }
   };
 
@@ -54,10 +58,6 @@ const Register = ({ navigation }) => {
 
       <TouchableOpacity style={styles.button} onPress={handleRegister}>
         <Text style={styles.buttonText}>Criar conta</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity onPress={() => navigation.navigate("Login")}>
-        <Text style={styles.link}>Já tem uma conta? Faça login</Text>
       </TouchableOpacity>
     </View>
   );
