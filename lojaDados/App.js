@@ -59,7 +59,8 @@ export default function App() {
             headerStyle: { 
               backgroundColor: "#000000",
               borderBottomColor: "#FF0068",
-              borderBottomWidth: 1
+              borderBottomWidth: 1,
+              borderBottomWidth: 0, 
             },
             headerTitle: ""
         }}/>
@@ -67,7 +68,8 @@ export default function App() {
             headerStyle: { 
               backgroundColor: "#000000",
               borderBottomColor: "#FF0068",
-              borderBottomWidth: 1
+              borderBottomWidth: 1,
+              borderBottomWidth: 0,
             },
             headerTintColor: "#FF0068",
             headerTitle: "Login"
