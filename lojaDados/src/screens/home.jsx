@@ -30,22 +30,6 @@ export default function Home({navigation}) {
                 </View>
             </ScrollView> 
 
-
-
-
-
-
-            <View style = {styles.downPage}> 
-
-
-                <TouchableOpacity>
-                    <Text style = {styles.aboutButtons}>Alguma coisa não definida depois que a sora quebrou nosso projeto</Text>
-                </TouchableOpacity>  
-
-                <TouchableOpacity onPress={() => navigation.navigate("Feed")}>
-                    <Text style = {styles.aboutButtons}>Sobre nós</Text>
-                </TouchableOpacity>
-            </View> 
         </View>
     )
 }
@@ -93,24 +77,7 @@ const styles = StyleSheet.create({
     //Meio da página
 
     middlePage: {
-        height: 480,
+        height: "auto",
     },
 
-
-    //Baixo da página
-
-    downPage: {
-        height: 145,
-        alignItems: "center",
-        justifyContent: "space-around",
-        // backgroundColor: "#252"
-    },
-    aboutButtons: {
-        width: 300,
-        backgroundColor: "#121219",
-        fontSize: 20,
-        textAlign: "center",
-        borderRadius: 7,
-        color: "#FF0068"
-    },
 })
