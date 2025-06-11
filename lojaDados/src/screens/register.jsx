@@ -40,7 +40,7 @@ const Register = ({ navigation }) => {
       <TextInput
         style={styles.input}
         placeholder="Email"
-        placeholderTextColor="#999"
+        placeholderTextColor="#FF0068"
         keyboardType="email-address"
         autoCapitalize="none"
         value={email}
@@ -50,7 +50,7 @@ const Register = ({ navigation }) => {
       <TextInput
         style={styles.input}
         placeholder="Senha"
-        placeholderTextColor="#999"
+        placeholderTextColor="#FF0068"
         secureTextEntry
         value={password}
         onChangeText={setPassword}
@@ -68,7 +68,7 @@ export default Register;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#333",
+    backgroundColor: "#000000",
     justifyContent: "center",
     paddingHorizontal: 30,
   },
@@ -77,32 +77,33 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 40,
     textAlign: "center",
-    color: "#f4f4f4",
+    color: "#FF0068",
   },
   input: {
     height: 48,
     borderRadius: 8,
     backgroundColor: "#222",
-    borderColor: "#ddd",
+    borderColor: "#FF0068",
     borderWidth: 1,
     paddingHorizontal: 15,
     marginBottom: 15,
-    color: "#fff",
+    color: "#FF0068",
   },
   button: {
-    backgroundColor: "#4A90E2",
+    backgroundColor: "#FF0068",
     borderRadius: 8,
     alignItems: "center",
     paddingVertical: 14,
     marginBottom: 15,
+    color: "#FF0068"
   },
   buttonText: {
     fontWeight: "bold",
-    color: "#333",
+    color: "#FFFFFF",
     fontSize: 16,
   },
   link: {
-    color: "#4A90E2",
+    color: "#FF0068",
     textAlign: "center",
     fontSize: 15,
     textDecorationLine: "underline",

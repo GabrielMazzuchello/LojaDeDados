@@ -31,12 +31,12 @@ const Login = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Login</Text>
+      <Text style={styles.title}>LOGIN</Text>
 
       <TextInput
         style={styles.input}
         placeholder="Email"
-        placeholderTextColor="#999"
+        placeholderTextColor="#FF0068"
         keyboardType="email-address"
         value={email}
         onChangeText={setEmail}
@@ -45,7 +45,7 @@ const Login = ({ navigation }) => {
       <TextInput
         style={styles.input}
         placeholder="Senha"
-        placeholderTextColor="#999"
+        placeholderTextColor="#FF0068"
         secureTextEntry={true}
         value={password}
         onChangeText={setPassword}
@@ -67,7 +67,7 @@ export default Login;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#333",
+    backgroundColor: "#000000",
     justifyContent: "center",
     paddingHorizontal: 30,
   },
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 40,
     textAlign: "center",
-    color: "#f4f4f4",
+    color: "#FF0068",
   },
   input: {
     height: 48,
@@ -85,23 +85,24 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     marginBottom: 20,
     borderWidth: 1,
-    borderColor: "#ddd",
+    borderColor: "#FF0068",
+    color: "#FF0068"
   },
   button: {
-    backgroundColor: "#4A90E2",
+    backgroundColor: "#FF0068",
     paddingVertical: 14,
     borderRadius: 8,
     alignItems: "center",
     marginBottom: 15,
-    color: "#333",
+    color: "#FF0068",
   },
   buttonText: {
-    color: "#333",
+    color: "#FFF",
     fontWeight: "bold",
     fontSize: 16,
   },
   linkText: {
-    color: "#4A90E2",
+    color: "#FF0068",
     textAlign: "center",
     fontSize: 15,
   },
