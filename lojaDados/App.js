@@ -11,6 +11,8 @@ import Register from "./src/screens/register";
 import Home from "./src/screens/home";
 
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+
 import Adm from "./src/screens/adm";
 import Cart from "./src/screens/cart";
 
@@ -38,7 +40,7 @@ function HomeTabs() {
       }}
     >
       <Tabs.Screen
-        name="Home"
+        name="Portal"
         component={Home}
         options={{
           tabBarIcon: () => (
@@ -47,25 +49,26 @@ function HomeTabs() {
         }}
       />
       <Tabs.Screen
-        name="ADM"
+        name="Mestre"
         component={Adm}
         options={{
           tabBarIcon: () => (
             <MaterialIcons name="home" size={32} color={"#FF0068"} />
+            //EXCLUIR ESSA PARTE PQ VAI SER STACK MAIS TARDE
           ),
         }}
       />
       <Tabs.Screen
-        name="Carrinho"
+        name="Sessões"
         component={Cart}
         options={{
           tabBarIcon: () => (
-            <MaterialIcons name="home" size={32} color={"#FF0068"} />
+            <MaterialCommunityIcons name="dice-d20-outline" size={32} color={"#FF0068"}/>
           ),
         }}
       />
       <Tabs.Screen
-        name="Feed"
+        name="Sobre nós"
         component={Feed}
         options={{
           tabBarIcon: () => (
