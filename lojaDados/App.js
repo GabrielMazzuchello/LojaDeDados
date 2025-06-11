@@ -55,8 +55,23 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name="Register" component={Register} />
+        <Stack.Screen name="Login" component={Login}           options={{
+            headerStyle: { 
+              backgroundColor: "#000000",
+              borderBottomColor: "#FF0068",
+              borderBottomWidth: 1
+            },
+            headerTitle: ""
+        }}/>
+        <Stack.Screen name="register" component={Register} options={{
+            headerStyle: { 
+              backgroundColor: "#000000",
+              borderBottomColor: "#FF0068",
+              borderBottomWidth: 1
+            },
+            headerTintColor: "#FF0068",
+            headerTitle: "Login"
+        }}/>
         <Stack.Screen
           name="HomeTabs"
           component={HomeTabs}
