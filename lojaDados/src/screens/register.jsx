@@ -35,7 +35,7 @@ const Register = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Registrar-se</Text>
+      <Text style={styles.title}>REGISTRAR-SE</Text>
 
       <TextInput
         style={styles.input}
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
   },
   title: {
-    fontSize: 28,
+    fontSize: 35,
     fontWeight: "bold",
     marginBottom: 40,
     textAlign: "center",

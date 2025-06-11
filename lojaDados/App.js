@@ -35,7 +35,7 @@ function HomeTabs() {
         },
       }}
     >
-      <Tabs.Screen name="Home" component={Home} 
+      <Tabs.Screen name="Portal" component={Home} 
       options={{
         tabBarIcon: () => (
           <MaterialIcons name='home' size={32} color={'#FF0068'}/>
