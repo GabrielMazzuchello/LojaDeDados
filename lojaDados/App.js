@@ -10,7 +10,9 @@ import Feed from "./src/screens/feed";
 import Register from "./src/screens/register";
 import Home from "./src/screens/home";
 
-import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import Adm from "./src/screens/adm";
+import Cart from "./src/screens/cart";
 
 const Stack = createStackNavigator();
 const Tabs = createBottomTabNavigator();
@@ -35,18 +37,42 @@ function HomeTabs() {
         },
       }}
     >
-      <Tabs.Screen name="Portal" component={Home} 
-      options={{
-        tabBarIcon: () => (
-          <MaterialIcons name='home' size={32} color={'#FF0068'}/>
-        ),
-      }}/>
-      <Tabs.Screen name="Feed" component={Feed} 
-      options={{
-        tabBarIcon: () => (
-          <MaterialIcons name="feed" size={32} color={'#FF0068'}/>
-        ),
-      }}/>
+      <Tabs.Screen
+        name="Home"
+        component={Home}
+        options={{
+          tabBarIcon: () => (
+            <MaterialIcons name="home" size={32} color={"#FF0068"} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="ADM"
+        component={Adm}
+        options={{
+          tabBarIcon: () => (
+            <MaterialIcons name="home" size={32} color={"#FF0068"} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="Carrinho"
+        component={Cart}
+        options={{
+          tabBarIcon: () => (
+            <MaterialIcons name="home" size={32} color={"#FF0068"} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="Feed"
+        component={Feed}
+        options={{
+          tabBarIcon: () => (
+            <MaterialIcons name="feed" size={32} color={"#FF0068"} />
+          ),
+        }}
+      />
     </Tabs.Navigator>
   );
 }
@@ -55,25 +81,33 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Login" component={Login}           options={{
-            headerStyle: { 
+        <Stack.Screen
+          name="Login"
+          component={Login}
+          options={{
+            headerStyle: {
               backgroundColor: "#000000",
               borderBottomColor: "#FF0068",
               borderBottomWidth: 1,
-              borderBottomWidth: 0, 
+              borderBottomWidth: 0,
             },
-            headerTitle: ""
-        }}/>
-        <Stack.Screen name="register" component={Register} options={{
-            headerStyle: { 
+            headerTitle: "",
+          }}
+        />
+        <Stack.Screen
+          name="register"
+          component={Register}
+          options={{
+            headerStyle: {
               backgroundColor: "#000000",
               borderBottomColor: "#FF0068",
               borderBottomWidth: 1,
               borderBottomWidth: 0,
             },
             headerTintColor: "#FF0068",
-            headerTitle: "Login"
-        }}/>
+            headerTitle: "Login",
+          }}
+        />
         <Stack.Screen
           name="HomeTabs"
           component={HomeTabs}

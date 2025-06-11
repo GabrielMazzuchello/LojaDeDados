@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, View, Text, ScrollView, Image} from "react-native";
 
-const Feed = (navigation) => {
+const Feed = ({navigation}) => {
   return (
     <ScrollView style={styles.feed}>
         <View style={styles.box}>
