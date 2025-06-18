@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, ScrollView, Image} from "react-native";
 
 const Feed = ({navigation}) => {
   return (
-    <ScrollView style={styles.feed}>
+    <ScrollView showsVerticalScrollIndicator={false} style={styles.feed}>
         <View style={styles.box}>
             <View>
                 <Text style={styles.title}>SOBRE NÓS</Text>
