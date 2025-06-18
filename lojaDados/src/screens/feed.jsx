@@ -6,7 +6,7 @@ const Feed = ({navigation}) => {
     <ScrollView style={styles.feed}>
         <View style={styles.box}>
             <View>
-                <Text style={styles.title}>SOBRE NÓS:</Text>
+                <Text style={styles.title}>SOBRE NÓS</Text>
             </View>
             <View>
                 <Image style={styles.image} source={require("../../assets/imagens/sus.png")}></Image>
