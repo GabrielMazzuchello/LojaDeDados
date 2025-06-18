@@ -11,7 +11,7 @@ import Register from "./src/screens/register";
 import Home from "./src/screens/home";
 
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 
 import Adm from "./src/screens/adm";
 import Cart from "./src/screens/cart";
@@ -63,7 +63,11 @@ function HomeTabs() {
         component={Cart}
         options={{
           tabBarIcon: () => (
-            <MaterialCommunityIcons name="dice-d20-outline" size={32} color={"#FF0068"}/>
+            <MaterialCommunityIcons
+              name="dice-d20-outline"
+              size={32}
+              color={"#FF0068"}
+            />
           ),
         }}
       />
@@ -86,7 +90,7 @@ export default function App() {
       <Stack.Navigator>
         <Stack.Screen
           name="Login"
-          component={Home}
+          component={Login}
           options={{
             headerStyle: {
               backgroundColor: "#000000",
