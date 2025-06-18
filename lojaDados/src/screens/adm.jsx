@@ -24,7 +24,7 @@ const Adm = ({ navigation }) => {
       <br /><br /><br />
       <TextInput
         style = {styles.input}
-        placeholder="Mestre"
+        placeholder="Nome do mestre"
         placeholderTextColor={"#4a5e49"}
         value={mestre}
         onChangeText={setMestre}/>
@@ -62,7 +62,7 @@ const Adm = ({ navigation }) => {
       <br /><br /><br />
   
 
-        <TouchableOpacity>
+        <TouchableOpacity style = {styles.button}>
           <Text style = {styles.link}>Cadastrar produto</Text>
         </TouchableOpacity>
     </View>
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
   },
   link: { 
     alignSelf: 'center',
-    fontSize: 28,
+    fontSize: 25,
     color: "#FF0068",
     fontWeight: 'bold'
   },
@@ -113,6 +113,13 @@ const styles = StyleSheet.create({
     width: 350,
     justifyContent: "space-around",
     alignItems: "center"
+  },
+  button: {
+    borderWidth: 1,
+    borderRadius: 5,
+    borderColor: "#FF0068",
+    backgroundColor: "#121212", 
+    width: 250,
   }
   
 });
