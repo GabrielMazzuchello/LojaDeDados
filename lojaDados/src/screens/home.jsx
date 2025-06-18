@@ -17,8 +17,6 @@ export default function Home({navigation}) {
                 <View style = {styles.divisionTopPage1}></View>
             </View> 
 
-
-
             <ScrollView showsVerticalScrollIndicator={false}> 
                 <View style = {styles.middlePage}>
                     <Text style={{ color: '#FF0068' }}>meio da pagina</Text>
@@ -37,7 +35,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#000",
     },
     topPage: {
-        height: 220,
+        height: 190,
         justifyContent: "space-around",
         alignItems: "center",
         display: "flex",
@@ -50,12 +48,12 @@ const styles = StyleSheet.create({
         alignItems: "center"
     },
     divisionTopPage2: {
-        height: 140,
-        width: 150,
+        height: 150,
+        width: 160,
     },
     img: {
-        width: 220,
-        height: 220,  
+        width: 170,
+        height: 160,  
     },
     cart: {
         width: 70,
