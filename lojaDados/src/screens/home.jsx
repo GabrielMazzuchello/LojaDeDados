@@ -52,6 +52,7 @@ const styles = StyleSheet.create({
     divisionTopPage2: {
         height: 140,
         width: 150,
+        alignItems: "center"
     },
     img: {
         width: 220,
