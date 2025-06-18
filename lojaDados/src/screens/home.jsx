@@ -14,12 +14,7 @@ export default function Home({navigation}) {
                 <View style = {styles.divisionTopPage2}>
                     <Image style={styles.img} source={require("../../assets/imagens/sus.png")}></Image>
                 </View>
-                <View style = {styles.divisionTopPage1}>
-                    <TouchableOpacity  onPress={() => navigation.navigate("Home")}>
-                        <Image style = {styles.cart} source = {{uri: 'https://media.tenor.com/olk7lEobPJMAAAAM/minecraft-buff-steve.gif' }}/>
-                    </TouchableOpacity>
-                    <Text style={{ color: '#FF0068' }}>Sessões</Text>
-                </View>
+                <View style = {styles.divisionTopPage1}></View>
             </View> 
 
 
@@ -42,7 +37,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#000",
     },
     topPage: {
-        height: 170,
+        height: 220,
         justifyContent: "space-around",
         alignItems: "center",
         display: "flex",
@@ -59,8 +54,8 @@ const styles = StyleSheet.create({
         width: 150,
     },
     img: {
-        width: 150,
-        height: 140,  
+        width: 220,
+        height: 220,  
     },
     cart: {
         width: 70,
