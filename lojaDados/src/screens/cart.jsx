@@ -20,7 +20,7 @@ const Cart = ({ navigation }) => {
             <Image style={styles.image} source={require("../../assets/imagens/bombardiroCrocodilo.png")}></Image>
           </View>
           <View>
-            <Text style={styles.text}>Skibidi Toilet</Text>
+            <Text style={styles.text}>Informações aqui</Text>
           </View>
         </View>
       </View>
@@ -49,19 +49,15 @@ const styles = StyleSheet.create ({
     alignItems: "center",
     justifyContent: "center",
     color: "#FF0068",
-    marginBottom: "20px"
+    marginBottom: "20px",
   },
   card: {
     display: "flex",
     flexDirection: "row",
-    backgroundColor: "#FF0068",
-    maxHeight: 125,
-    width: "auto",
-    height: "auto",
   },
   image: {
-    width: 125,
-    height: 125,
+    width: 150,
+    height: 150,
     marginBottom: 20
   },
   text: {
@@ -72,6 +68,10 @@ const styles = StyleSheet.create ({
     maxWidth: "300px",
     padding: "6px",
     textAlign: "justify",
+    backgroundColor: "#FF0068",
+    maxHeight: 150,
+    width: 200,
+    height: "auto",
   },
   extra: {
     flex: 1,
