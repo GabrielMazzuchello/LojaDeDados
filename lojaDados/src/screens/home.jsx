@@ -90,7 +90,7 @@ export default function Home({ navigation }) {
             <View key={sessao.id} style={styles.card}>
               <Text style={styles.cardTitle}>{sessao.nome}</Text>
               <Text style={styles.cardText}>Mestre: {sessao.mestre}</Text>
-              <Text style={styles.cardText}>Cenário: {sessao.cenario}</Text>
+              <Text style={styles.cardText}>Sistema: {sessao.cenario}</Text>
               <Text style={styles.cardText}>Data: {sessao.data}</Text>
               <Text style={styles.cardText}>Hora: {sessao.hora}</Text>
               {sessao.imagem ? (
@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   topPage: {
-    height: 220,
+    height: 200,
     justifyContent: "space-around",
     alignItems: "center",
     flexDirection: "row",
@@ -144,17 +144,20 @@ const styles = StyleSheet.create({
     width: 150,
   },
   img: {
-    width: 220,
-    height: 220,
+    width: 170,
+    height: 160,
     resizeMode: "contain",
   },
   button: {
-    fontSize: 12,
-    backgroundColor: "#555",
+    height: 60,
+    width: 90,
+    fontSize: 16,
+    backgroundColor: "#121212",
     borderRadius: 5,
     padding: 8,
     fontWeight: "bold",
     color: "#FF0068",
+    textAlign: "center",
   },
   middlePage: {
     paddingBottom: 30,
@@ -166,6 +169,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderColor: "#FF0068",
     borderWidth: 1,
+    paddingInline: 15,
+    marginInline: 15
   },
   cardTitle: {
     fontSize: 20,
@@ -180,7 +185,7 @@ const styles = StyleSheet.create({
   },
   cardImage: {
     width: "100%",
-    height: 150,
+    height: 250,
     marginTop: 10,
     borderRadius: 8,
   },
