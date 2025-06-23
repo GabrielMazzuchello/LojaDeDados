@@ -61,7 +61,7 @@ const MySessions = ({ navigation }) => {
               <View style={{ flex: 1, padding: 8 }}>
                 <Text style={styles.text}>Nome: {sessao.nome}</Text>
                 <Text style={styles.text}>Mestre: {sessao.mestre}</Text>
-                <Text style={styles.text}>Cenário: {sessao.cenario}</Text>
+                <Text style={styles.text}>Sistema: {sessao.cenario}</Text>
                 <Text style={styles.text}>
                   Data: {sessao.data} - Hora: {sessao.hora}
                 </Text>
@@ -69,7 +69,7 @@ const MySessions = ({ navigation }) => {
                   onPress={() => sairDaSessao(sessao.id)}
                   style={styles.extra}
                 >
-                  <Text style={{ color: "#121212" }}>Sair da sessão</Text>
+                  <Text style={{ color: "#fff" }}>Sair da sessão</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -99,24 +99,29 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   card: {
+    backgroundColor: "#111",
     flexDirection: "row",
-    backgroundColor: "#FF0068",
     marginBottom: 20,
     marginHorizontal: 10,
     borderRadius: 10,
+    borderColor: "#FF0068",
+    borderWidth: 1,
+    paddingInline: 15,
+    marginInline: 15,
     overflow: "hidden",
   },
   image: {
+    alignSelf: "center",
     width: 125,
     height: 125,
   },
   text: {
-    color: "#000",
-    fontSize: 14,
+    color: "#fff",
+    fontSize: 15,
     marginBottom: 4,
   },
   extra: {
-    backgroundColor: "#fff",
+    backgroundColor: "#FF0068",
     borderRadius: 8,
     padding: 8,
     marginTop: 8,
