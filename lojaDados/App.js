@@ -14,7 +14,7 @@ import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 
 import Adm from "./src/screens/adm";
-import Cart from "./src/screens/cart";
+import MySessions from "./src/screens/mySessions";
 
 const Stack = createStackNavigator();
 const Tabs = createBottomTabNavigator();
@@ -50,7 +50,7 @@ function HomeTabs() {
       />
       <Tabs.Screen
         name="Sessões"
-        component={Cart}
+        component={MySessions}
         options={{
           tabBarIcon: () => (
             <MaterialCommunityIcons

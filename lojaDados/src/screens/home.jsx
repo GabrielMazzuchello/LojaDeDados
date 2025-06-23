@@ -22,26 +22,26 @@ export default function Home({ navigation }) {
 
   const adminUID = "W5grpvre76XJNRSISOAnKSky35j2";
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const user = auth.currentUser;
-        if (user) {
-          await user.reload();
-          setUidAtual(user.uid);
-        }
-
-        const snapshot = await getDocs(collection(db, "sessoes"));
-        const lista = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        setSessoes(lista);
-      } catch (error) {
-        console.error("Erro ao buscar sessões:", error);
+  const fetchData = async () => {
+    try {
+      const user = auth.currentUser;
+      if (user) {
+        await user.reload();
+        setUidAtual(user.uid);
       }
-    };
 
+      const snapshot = await getDocs(collection(db, "sessoes"));
+      const lista = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setSessoes(lista);
+    } catch (error) {
+      console.error("Erro ao buscar sessões:", error);
+    }
+  };
+
+  useEffect(() => {
     fetchData();
   }, []);
 
@@ -49,7 +49,7 @@ export default function Home({ navigation }) {
     try {
       const user = auth.currentUser;
       if (!user) throw new Error("Usuário não autenticado");
-      if (participantesAtuais.includes(user.uid)) return; // já está participando
+      if (participantesAtuais.includes(user.uid)) return;
 
       const ref = doc(db, "sessoes", idSessao);
 
@@ -58,6 +58,7 @@ export default function Home({ navigation }) {
       });
 
       alert("Você entrou na sessão!");
+      fetchData();
     } catch (error) {
       console.log("Erro ao entrar na sessão: ", error);
     }
@@ -85,6 +86,10 @@ export default function Home({ navigation }) {
       </View>
 
       <ScrollView showsVerticalScrollIndicator={false}>
+        <TouchableOpacity onPress={fetchData} style={styles.refreshButton}>
+          <Text style={styles.refreshText}>🔄 Recarregar</Text>
+        </TouchableOpacity>
+
         <View style={styles.middlePage}>
           {sessoes.map((sessao) => (
             <View key={sessao.id} style={styles.card}>
@@ -170,7 +175,7 @@ const styles = StyleSheet.create({
     borderColor: "#FF0068",
     borderWidth: 1,
     paddingInline: 15,
-    marginInline: 15
+    marginInline: 15,
   },
   cardTitle: {
     fontSize: 20,
@@ -205,5 +210,16 @@ const styles = StyleSheet.create({
     fontStyle: "italic",
     marginTop: 10,
     textAlign: "center",
+  },
+  refreshButton: {
+    alignSelf: "center",
+    backgroundColor: "#222",
+    borderRadius: 10,
+    padding: 10,
+    marginBottom: 10,
+  },
+  refreshText: {
+    color: "#FF0068",
+    fontWeight: "bold",
   },
 });
