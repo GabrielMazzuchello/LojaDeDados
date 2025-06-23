@@ -115,7 +115,7 @@ const Adm = ({ navigation }) => {
         }
         style={styles.button}
       >
-        <Text style={styles.link}>Cadastrar produto</Text>
+        <Text style={styles.link}>Cadastrar sessão</Text>
       </TouchableOpacity>
     </View>
   );
