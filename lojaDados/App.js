@@ -49,16 +49,6 @@ function HomeTabs() {
         }}
       />
       <Tabs.Screen
-        name="Mestre"
-        component={Adm}
-        options={{
-          tabBarIcon: () => (
-            <MaterialIcons name="home" size={32} color={"#FF0068"} />
-            //EXCLUIR ESSA PARTE PQ VAI SER STACK MAIS TARDE
-          ),
-        }}
-      />
-      <Tabs.Screen
         name="Sessões"
         component={Cart}
         options={{
@@ -104,6 +94,20 @@ export default function App() {
         <Stack.Screen
           name="register"
           component={Register}
+          options={{
+            headerStyle: {
+              backgroundColor: "#000000",
+              borderBottomColor: "#FF0068",
+              borderBottomWidth: 1,
+              borderBottomWidth: 0,
+            },
+            headerTintColor: "#FF0068",
+            headerTitle: "Login",
+          }}
+        />
+        <Stack.Screen
+          name="Adm"
+          component={Adm}
           options={{
             headerStyle: {
               backgroundColor: "#000000",
