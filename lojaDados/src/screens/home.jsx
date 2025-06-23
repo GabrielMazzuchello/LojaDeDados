@@ -19,7 +19,6 @@ import { auth, db } from "../services/firebase";
 export default function Home({ navigation }) {
   const [sessoes, setSessoes] = useState([]);
   const [uidAtual, setUidAtual] = useState(null);
-
   const adminUID = "W5grpvre76XJNRSISOAnKSky35j2";
 
   useEffect(() => {
@@ -41,7 +40,6 @@ export default function Home({ navigation }) {
         console.error("Erro ao buscar sessões:", error);
       }
     };
-
     fetchData();
   }, []);
 
@@ -62,7 +60,6 @@ export default function Home({ navigation }) {
       console.log("Erro ao entrar na sessão: ", error);
     }
   };
-
   return (
     <View style={styles.container}>
       <View style={styles.topPage}>
@@ -80,7 +77,6 @@ export default function Home({ navigation }) {
             source={require("../../assets/imagens/sus.png")}
           />
         </View>
-
         <View style={styles.divisionTopPage1} />
       </View>
 
