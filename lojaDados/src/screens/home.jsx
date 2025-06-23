@@ -140,8 +140,8 @@ const styles = StyleSheet.create({
     width: 150,
   },
   img: {
-    width: 220,
-    height: 220,
+    width: 150,
+    height: 150,
     resizeMode: "contain",
   },
   button: {
@@ -162,6 +162,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderColor: "#FF0068",
     borderWidth: 1,
+    paddingInline: 15,
+    marginInline: 15
   },
   cardTitle: {
     fontSize: 20,
