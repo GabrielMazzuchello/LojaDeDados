@@ -60,7 +60,7 @@ export default function AdminPanel() {
 
   return (
     <ScrollView style={styles.container}>
-      <Text style={styles.title}>Gerenciar Administradores</Text>
+      <Text style={styles.title}>Gerenciar Mestres</Text>
 
       <TextInput
         placeholder="Buscar por email"

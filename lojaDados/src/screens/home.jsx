@@ -85,12 +85,10 @@ export default function Home({ navigation }) {
         <View style={styles.divisionTopPage1}>
           {uidAtual === adminUID && (
             <TouchableOpacity onPress={() => navigation.navigate("GerenciarAdmins")}>
-              <Text style={styles.button}>Cadastrar novo Adm</Text>
+              <Text style={styles.button}>Cadastrar Mestre</Text>
             </TouchableOpacity>
           )}
         </View>
-
-        <View style={styles.divisionTopPage1} />
       </View>
 
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -155,10 +153,11 @@ const styles = StyleSheet.create({
   divisionTopPage2: {
     height: 140,
     width: 150,
+    alignItems: "center",
+    justifyContent: "center"
   },
   img: {
-    width: 170,
-    height: 160,
+    width: "100%",
     resizeMode: "contain",
   },
   button: {
