@@ -7,8 +7,9 @@ import {
   TouchableOpacity,
   Alert,
 } from "react-native";
-import { auth } from "../services/firebase";
+import { auth, db } from "../services/firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -16,16 +17,34 @@ const Login = ({ navigation }) => {
 
   const handleLogin = async () => {
     if (!email || !password) {
-      Alert.alert("Erro, Preencha todos os campos");
+      Alert.alert("Erro", "Preencha todos os campos");
       return;
     }
 
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = userCredential.user;
+
+      // Verifica se o usuário já está na coleção users
+      const userRef = doc(db, "users", user.uid);
+      const userSnap = await getDoc(userRef);
+
+      if (!userSnap.exists()) {
+        // Adiciona o usuário se não estiver registrado
+        await setDoc(userRef, {
+          uid: user.uid,
+          email: user.email,
+        });
+      }
+
       Alert.alert("Logado com sucesso");
       navigation.navigate("HomeTabs");
     } catch (error) {
-      Alert.alert("Erro ao logar, " + error.message);
+      Alert.alert("Erro ao logar", error.message);
     }
   };
 
@@ -86,7 +105,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     borderWidth: 1,
     borderColor: "#FF0068",
-    color: "#FF0068"
+    color: "#FF0068",
   },
   button: {
     backgroundColor: "#FF0068",

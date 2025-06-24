@@ -9,12 +9,12 @@ import Login from "./src/screens/login";
 import Feed from "./src/screens/feed";
 import Register from "./src/screens/register";
 import Home from "./src/screens/home";
+import Adm from "./src/screens/adm";
+import MySessions from "./src/screens/mySessions";
+import GerenciarAdmins from "./src/screens/GerenciarAdmins";
 
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
-
-import Adm from "./src/screens/adm";
-import MySessions from "./src/screens/mySessions";
 
 const Stack = createStackNavigator();
 const Tabs = createBottomTabNavigator();
@@ -116,7 +116,21 @@ export default function App() {
               borderBottomWidth: 0,
             },
             headerTintColor: "#FF0068",
-            headerTitle: "Login",
+            headerTitle: "Adm",
+          }}
+        />
+        <Stack.Screen
+          name="GerenciarAdmins"
+          component={GerenciarAdmins}
+          options={{
+            headerStyle: {
+              backgroundColor: "#000000",
+              borderBottomColor: "#FF0068",
+              borderBottomWidth: 1,
+              borderBottomWidth: 0,
+            },
+            headerTintColor: "#FF0068",
+            headerTitle: "Portal",
           }}
         />
         <Stack.Screen
