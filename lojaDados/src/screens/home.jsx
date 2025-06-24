@@ -82,6 +82,14 @@ export default function Home({ navigation }) {
           />
         </View>
 
+        <View style={styles.divisionTopPage1}>
+          {uidAtual === adminUID && (
+            <TouchableOpacity onPress={() => navigation.navigate("GerenciarAdmins")}>
+              <Text style={styles.button}>Cadastrar novo Adm</Text>
+            </TouchableOpacity>
+          )}
+        </View>
+
         <View style={styles.divisionTopPage1} />
       </View>
 
