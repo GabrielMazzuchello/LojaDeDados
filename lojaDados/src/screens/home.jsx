@@ -11,6 +11,7 @@ import {
   collection,
   getDocs,
   updateDoc,
+  deleteDoc,
   doc,
   arrayUnion,
 } from "firebase/firestore";
@@ -19,8 +20,17 @@ import { auth, db } from "../services/firebase";
 export default function Home({ navigation }) {
   const [sessoes, setSessoes] = useState([]);
   const [uidAtual, setUidAtual] = useState(null);
+  const [adminUIDs, setAdminUIDs] = useState([]);
 
-  const adminUID = "W5grpvre76XJNRSISOAnKSky35j2";
+  const fetchAdmins = async () => {
+    try {
+      const snapshot = await getDocs(collection(db, "administradores"));
+      const listaUIDs = snapshot.docs.map((doc) => doc.data().uid);
+      setAdminUIDs(listaUIDs);
+    } catch (error) {
+      console.error("Erro ao buscar administradores:", error);
+    }
+  };
 
   const fetchData = async () => {
     try {
@@ -42,7 +52,11 @@ export default function Home({ navigation }) {
   };
 
   useEffect(() => {
-    fetchData();
+    const fetchAll = async () => {
+      await fetchAdmins();
+      await fetchData();
+    };
+    fetchAll();
   }, []);
 
   const entrarNaSessao = async (idSessao, participantesAtuais) => {
@@ -64,11 +78,21 @@ export default function Home({ navigation }) {
     }
   };
 
+  const removerSessao = async (idSessao) => {
+    try {
+      await deleteDoc(doc(db, "sessoes", idSessao));
+      alert("Sessão removida com sucesso.");
+      fetchData();
+    } catch (error) {
+      console.error("Erro ao remover sessão:", error);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.topPage}>
         <View style={styles.divisionTopPage1}>
-          {uidAtual === adminUID && (
+          {adminUIDs.includes(uidAtual) && (
             <TouchableOpacity onPress={() => navigation.navigate("Adm")}>
               <Text style={styles.button}>Agendar Sessões</Text>
             </TouchableOpacity>
@@ -83,8 +107,10 @@ export default function Home({ navigation }) {
         </View>
 
         <View style={styles.divisionTopPage1}>
-          {uidAtual === adminUID && (
-            <TouchableOpacity onPress={() => navigation.navigate("GerenciarAdmins")}>
+          {adminUIDs.includes(uidAtual) && (
+            <TouchableOpacity
+              onPress={() => navigation.navigate("GerenciarAdmins")}
+            >
               <Text style={styles.button}>Cadastrar Mestre</Text>
             </TouchableOpacity>
           )}
@@ -104,12 +130,12 @@ export default function Home({ navigation }) {
               <Text style={styles.cardText}>Sistema: {sessao.cenario}</Text>
               <Text style={styles.cardText}>Data: {sessao.data}</Text>
               <Text style={styles.cardText}>Hora: {sessao.hora}</Text>
-              {sessao.imagem ? (
+              {sessao.imagem && (
                 <Image
                   source={{ uri: sessao.imagem }}
                   style={styles.cardImage}
                 />
-              ) : null}
+              )}
               {uidAtual && !sessao.participantes?.includes(uidAtual) ? (
                 <TouchableOpacity
                   style={styles.entrarButton}
@@ -123,6 +149,14 @@ export default function Home({ navigation }) {
                 <Text style={styles.jaParticipa}>
                   Você já está participando
                 </Text>
+              )}
+              {adminUIDs.includes(uidAtual) && (
+                <TouchableOpacity
+                  style={styles.removerButton}
+                  onPress={() => removerSessao(sessao.id)}
+                >
+                  <Text style={styles.buttonText}>Remover</Text>
+                </TouchableOpacity>
               )}
             </View>
           ))}
@@ -154,7 +188,7 @@ const styles = StyleSheet.create({
     height: 140,
     width: 150,
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   img: {
     width: "100%",
@@ -204,6 +238,12 @@ const styles = StyleSheet.create({
   entrarButton: {
     marginTop: 10,
     backgroundColor: "#FF0068",
+    borderRadius: 6,
+    padding: 8,
+  },
+  removerButton: {
+    marginTop: 10,
+    backgroundColor: "#A00",
     borderRadius: 6,
     padding: 8,
   },
