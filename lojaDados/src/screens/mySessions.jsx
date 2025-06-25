@@ -65,6 +65,7 @@ const MySessions = ({ navigation }) => {
                 <Text style={styles.text}>
                   Data: {sessao.data} - Hora: {sessao.hora}
                 </Text>
+                <Text style={styles.text}>Local: {sessao.local}</Text>
                 <TouchableOpacity
                   onPress={() => sairDaSessao(sessao.id)}
                   style={styles.extra}

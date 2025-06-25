@@ -17,6 +17,7 @@ const Adm = ({ navigation }) => {
   const [cenario, setCenario] = useState("");
   const [hora, setHora] = useState("");
   const [data, setData] = useState("");
+  const [local, setLocal] = useState("");
   const [imagem, setImagem] = useState("");
 
   const criarSessao = async ({ nome, mestre, cenario, data, hora, imagem }) => {
@@ -29,6 +30,7 @@ const Adm = ({ navigation }) => {
         cenario,
         data,
         hora,
+        local,
         imagem,
         owner: user.uid,
         participantes: [user.uid],
@@ -69,7 +71,7 @@ const Adm = ({ navigation }) => {
       <br />
       <TextInput
         style={styles.input}
-        placeholder="Cenário"
+        placeholder="Sistema"
         placeholderTextColor={"#4a5e49"}
         value={cenario}
         onChangeText={setCenario}
@@ -77,7 +79,6 @@ const Adm = ({ navigation }) => {
       <br />
       <br />
       <br />
-
       <View style={styles.spaceData}>
         <TextInput
           style={styles.inputData}
@@ -94,6 +95,16 @@ const Adm = ({ navigation }) => {
           onChangeText={setData}
         />
       </View>
+      <br />
+      <br />
+      <br />
+      <TextInput
+        style={styles.input}
+        placeholder="Local"
+        placeholderTextColor="#4a5e49"
+        value={local}
+        onChangeText={setLocal}
+      />
       <br />
       <br />
       <br />
