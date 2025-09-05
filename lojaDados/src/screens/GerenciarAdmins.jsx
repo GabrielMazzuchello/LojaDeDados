@@ -1,5 +1,3 @@
-// Tela de gerenciamento de administradores usando Firestore
-
 import React, { useEffect, useState } from "react";
 import {
   View,
@@ -15,14 +13,16 @@ import {
   setDoc,
   deleteDoc,
   doc,
-  getDoc,
 } from "firebase/firestore";
-import { db } from "../services/firebase";
+import { db, auth } from "../services/firebase";
+
+const ROOT_ADMIN_UID = "W5grpvre76XJNRSISOAnKSky35j2"; // <- coloque aqui o UID fixo do admin raiz
 
 export default function AdminPanel() {
   const [usuarios, setUsuarios] = useState([]);
   const [search, setSearch] = useState("");
-  const [admins, setAdmins] = useState([]);
+  const [mestres, setMestres] = useState([]);
+  const user = auth.currentUser;
 
   const fetchUsuarios = async () => {
     const querySnapshot = await getDocs(collection(db, "users"));
@@ -33,26 +33,34 @@ export default function AdminPanel() {
     setUsuarios(lista);
   };
 
-  const fetchAdmins = async () => {
+  const fetchMestres = async () => {
     const snapshot = await getDocs(collection(db, "administradores"));
     const lista = snapshot.docs.map((doc) => doc.id); // apenas os UIDs
-    setAdmins(lista);
+    setMestres(lista);
   };
 
-  const tornarAdmin = async (uid) => {
+  const tornarMestre = async (uid) => {
     await setDoc(doc(db, "administradores", uid), { uid });
-    fetchAdmins();
+    fetchMestres();
   };
 
-  const removerAdmin = async (uid) => {
+  const removerMestre = async (uid) => {
     await deleteDoc(doc(db, "administradores", uid));
-    fetchAdmins();
+    fetchMestres();
   };
 
   useEffect(() => {
     fetchUsuarios();
-    fetchAdmins();
+    fetchMestres();
   }, []);
+
+  if (!user || user.uid !== ROOT_ADMIN_UID) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <Text style={{ color: "#fff" }}>Acesso negado</Text>
+      </View>
+    );
+  }
 
   const usuariosFiltrados = usuarios.filter((user) =>
     user.email.toLowerCase().includes(search.toLowerCase())
@@ -73,19 +81,19 @@ export default function AdminPanel() {
       {usuariosFiltrados.map((user) => (
         <View key={user.id} style={styles.userCard}>
           <Text style={styles.email}>{user.email}</Text>
-          {admins.includes(user.id) ? (
+          {mestres.includes(user.id) ? (
             <TouchableOpacity
               style={styles.removerBtn}
-              onPress={() => removerAdmin(user.id)}
+              onPress={() => removerMestre(user.id)}
             >
-              <Text style={styles.btnText}>Remover ADM</Text>
+              <Text style={styles.btnText}>Remover Mestre</Text>
             </TouchableOpacity>
           ) : (
             <TouchableOpacity
               style={styles.tornarBtn}
-              onPress={() => tornarAdmin(user.id)}
+              onPress={() => tornarMestre(user.id)}
             >
-              <Text style={styles.btnText}>Tornar ADM</Text>
+              <Text style={styles.btnText}>Tornar Mestre</Text>
             </TouchableOpacity>
           )}
         </View>

@@ -3,12 +3,10 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  Image,
   TextInput,
 } from "react-native";
-import { useEffect, useState } from "react";
-import { auth } from "../services/firebase";
-import { db } from "../services/firebase";
+import { useState } from "react";
+import { auth, db } from "../services/firebase";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 
 const Adm = ({ navigation }) => {
@@ -20,10 +18,11 @@ const Adm = ({ navigation }) => {
   const [local, setLocal] = useState("");
   const [imagem, setImagem] = useState("");
 
-  const criarSessao = async ({ nome, mestre, cenario, data, hora, imagem }) => {
+  const criarSessao = async () => {
     try {
       const user = auth.currentUser;
       if (!user) throw new Error("Usuário não autenticado");
+
       await addDoc(collection(db, "sessoes"), {
         nome,
         mestre,
@@ -34,7 +33,7 @@ const Adm = ({ navigation }) => {
         imagem,
         owner: user.uid,
         participantes: [user.uid],
-        CreateAt: serverTimestamp(),
+        createdAt: serverTimestamp(),
       });
       navigation.navigate("HomeTabs", { screen: "Portal" });
     } catch (error) {
@@ -44,11 +43,8 @@ const Adm = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <br />
       <Text style={styles.title}>CADASTRO SESSÕES</Text>
-      <br />
-      <br />
-      <br />
+
       <TextInput
         style={styles.input}
         placeholder="Nome da sessão"
@@ -56,9 +52,7 @@ const Adm = ({ navigation }) => {
         value={nome}
         onChangeText={setNome}
       />
-      <br />
-      <br />
-      <br />
+
       <TextInput
         style={styles.input}
         placeholder="Nome do mestre"
@@ -66,9 +60,7 @@ const Adm = ({ navigation }) => {
         value={mestre}
         onChangeText={setMestre}
       />
-      <br />
-      <br />
-      <br />
+
       <TextInput
         style={styles.input}
         placeholder="Sistema"
@@ -76,9 +68,7 @@ const Adm = ({ navigation }) => {
         value={cenario}
         onChangeText={setCenario}
       />
-      <br />
-      <br />
-      <br />
+
       <View style={styles.spaceData}>
         <TextInput
           style={styles.inputData}
@@ -95,9 +85,7 @@ const Adm = ({ navigation }) => {
           onChangeText={setData}
         />
       </View>
-      <br />
-      <br />
-      <br />
+
       <TextInput
         style={styles.input}
         placeholder="Local"
@@ -105,9 +93,6 @@ const Adm = ({ navigation }) => {
         value={local}
         onChangeText={setLocal}
       />
-      <br />
-      <br />
-      <br />
 
       <TextInput
         style={styles.input}
@@ -116,16 +101,8 @@ const Adm = ({ navigation }) => {
         value={imagem}
         onChangeText={setImagem}
       />
-      <br />
-      <br />
-      <br />
 
-      <TouchableOpacity
-        onPress={() =>
-          criarSessao({ nome, mestre, cenario, data, hora, imagem })
-        }
-        style={styles.button}
-      >
+      <TouchableOpacity onPress={criarSessao} style={styles.button}>
         <Text style={styles.link}>Cadastrar sessão</Text>
       </TouchableOpacity>
     </View>
@@ -143,6 +120,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 40,
     color: "#FF0068",
+    marginVertical: 20,
   },
   input: {
     width: 300,
@@ -153,6 +131,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderColor: "#FF0068",
     color: "#FF0068",
+    marginBottom: 12,
   },
   inputData: {
     width: 135,
@@ -171,11 +150,10 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   spaceData: {
-    display: "flex",
     flexDirection: "row",
     width: 350,
     justifyContent: "space-around",
-    alignItems: "center",
+    marginBottom: 12,
   },
   button: {
     borderWidth: 1,
@@ -183,5 +161,7 @@ const styles = StyleSheet.create({
     borderColor: "#FF0068",
     backgroundColor: "#121212",
     width: 250,
+    paddingVertical: 10,
+    marginTop: 15,
   },
 });

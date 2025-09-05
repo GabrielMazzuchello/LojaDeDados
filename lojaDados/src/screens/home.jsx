@@ -17,18 +17,20 @@ import {
 } from "firebase/firestore";
 import { auth, db } from "../services/firebase";
 
+const ROOT_ADMIN_UID = "W5grpvre76XJNRSISOAnKSky35j2"; // <- coloque aqui o UID fixo do admin raiz
+
 export default function Home({ navigation }) {
   const [sessoes, setSessoes] = useState([]);
   const [uidAtual, setUidAtual] = useState(null);
-  const [adminUIDs, setAdminUIDs] = useState([]);
+  const [mestres, setMestres] = useState([]);
 
-  const fetchAdmins = async () => {
+  const fetchMestres = async () => {
     try {
-      const snapshot = await getDocs(collection(db, "administradores"));
+      const snapshot = await getDocs(collection(db, "administradores")); // coleção de mestres
       const listaUIDs = snapshot.docs.map((doc) => doc.data().uid);
-      setAdminUIDs(listaUIDs);
+      setMestres(listaUIDs);
     } catch (error) {
-      console.error("Erro ao buscar administradores:", error);
+      console.error("Erro ao buscar mestres:", error);
     }
   };
 
@@ -53,7 +55,7 @@ export default function Home({ navigation }) {
 
   useEffect(() => {
     const fetchAll = async () => {
-      await fetchAdmins();
+      await fetchMestres();
       await fetchData();
     };
     fetchAll();
@@ -92,11 +94,11 @@ export default function Home({ navigation }) {
     <View style={styles.container}>
       <View style={styles.topPage}>
         <View style={styles.divisionTopPage1}>
-          {adminUIDs.includes(uidAtual) && (
-            <TouchableOpacity onPress={() => navigation.navigate("Adm")}>
-              <Text style={styles.button}>Agendar Sessões</Text>
-            </TouchableOpacity>
-          )}
+          {(mestres.includes(uidAtual) || uidAtual == ROOT_ADMIN_UID) && (
+              <TouchableOpacity onPress={() => navigation.navigate("Adm")}>
+                <Text style={styles.button}>Agendar Sessões</Text>
+              </TouchableOpacity>
+            )}
         </View>
 
         <View style={styles.divisionTopPage2}>
@@ -107,7 +109,7 @@ export default function Home({ navigation }) {
         </View>
 
         <View style={styles.divisionTopPage1}>
-          {adminUIDs.includes(uidAtual) && (
+          {uidAtual === ROOT_ADMIN_UID && (
             <TouchableOpacity
               onPress={() => navigation.navigate("GerenciarAdmins")}
             >
@@ -151,7 +153,7 @@ export default function Home({ navigation }) {
                   Você já está participando
                 </Text>
               )}
-              {adminUIDs.includes(uidAtual) && (
+              {(uidAtual == sessao.owner || uidAtual == ROOT_ADMIN_UID) && (
                 <TouchableOpacity
                   style={styles.removerButton}
                   onPress={() => removerSessao(sessao.id)}
