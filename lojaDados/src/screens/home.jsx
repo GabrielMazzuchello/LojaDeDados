@@ -14,6 +14,7 @@ import {
   deleteDoc,
   doc,
   arrayUnion,
+  setDoc,
 } from "firebase/firestore";
 import { auth, db } from "../services/firebase";
 
@@ -23,6 +24,51 @@ export default function Home({ navigation }) {
   const [sessoes, setSessoes] = useState([]);
   const [uidAtual, setUidAtual] = useState(null);
   const [mestres, setMestres] = useState([]);
+  const [solicitacaoStatus, setSolicitacaoStatus] = useState(null);
+
+  const verificarSolicitacao = async () => {
+    try {
+      const user = auth.currentUser;
+      if (!user) return;
+      const ref = doc(db, "solicitacoesMestre", user.uid);
+      const snap = await getDoc(ref);
+      if (snap.exists()) {
+        setSolicitacaoStatus(snap.data().status);
+      } else {
+        setSolicitacaoStatus(null);
+      }
+    } catch (err) {
+      console.error("Erro ao verificar solicitação:", err);
+    }
+  };
+
+  const solicitarMestre = async () => {
+    try {
+      const user = auth.currentUser;
+      if (!user) return;
+
+      await setDoc(doc(db, "solicitacoesMestre", user.uid), {
+        uid: user.uid,
+        email: user.email,
+        status: "pendente",
+        criadoEm: new Date(),
+      });
+
+      setSolicitacaoStatus("pendente");
+      alert("Solicitação enviada! Aguarde aprovação do administrador.");
+    } catch (err) {
+      console.error("Erro ao solicitar mestre:", err);
+    }
+  };
+
+  useEffect(() => {
+    const fetchAll = async () => {
+      await fetchMestres();
+      await fetchData();
+      await verificarSolicitacao();
+    };
+    fetchAll();
+  }, []);
 
   const fetchMestres = async () => {
     try {
@@ -95,10 +141,10 @@ export default function Home({ navigation }) {
       <View style={styles.topPage}>
         <View style={styles.divisionTopPage1}>
           {(mestres.includes(uidAtual) || uidAtual == ROOT_ADMIN_UID) && (
-              <TouchableOpacity onPress={() => navigation.navigate("Adm")}>
-                <Text style={styles.button}>Agendar Sessões</Text>
-              </TouchableOpacity>
-            )}
+            <TouchableOpacity onPress={() => navigation.navigate("Adm")}>
+              <Text style={styles.button}>Agendar Sessões</Text>
+            </TouchableOpacity>
+          )}
         </View>
 
         <View style={styles.divisionTopPage2}>
@@ -117,6 +163,29 @@ export default function Home({ navigation }) {
             </TouchableOpacity>
           )}
         </View>
+      </View>
+      <View style={styles.TopPage}>
+        {!mestres.includes(uidAtual) &&
+          uidAtual !== ROOT_ADMIN_UID &&
+          solicitacaoStatus !== "pendente" && (
+            <TouchableOpacity
+              onPress={solicitarMestre}
+              style={{
+                backgroundColor: "#333",
+                padding: 10,
+                borderRadius: 8,
+                borderWidth: 1,
+                borderColor: "#FF0068",
+                alignItems: "center",
+              }}
+            >
+              <Text style={{ color: "#FF0068", fontWeight: "bold" }}>
+                {solicitacaoStatus === "recusado"
+                  ? "Solicitar novamente para ser Mestre"
+                  : "Solicitar para ser Mestre"}
+              </Text>
+            </TouchableOpacity>
+          )}
       </View>
 
       <ScrollView showsVerticalScrollIndicator={false}>

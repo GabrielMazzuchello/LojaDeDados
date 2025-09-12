@@ -23,6 +23,19 @@ export default function AdminPanel() {
   const [search, setSearch] = useState("");
   const [mestres, setMestres] = useState([]);
   const user = auth.currentUser;
+  const [solicitacoes, setSolicitacoes] = useState([]);
+
+  const fetchSolicitacoes = async () => {
+    const snapshot = await getDocs(collection(db, "solicitacoesMestre"));
+    const lista = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    setSolicitacoes(lista);
+  };
+
+  useEffect(() => {
+    fetchUsuarios();
+    fetchMestres();
+    fetchSolicitacoes();
+  }, []);
 
   const fetchUsuarios = async () => {
     const querySnapshot = await getDocs(collection(db, "users"));
@@ -68,6 +81,48 @@ export default function AdminPanel() {
 
   return (
     <ScrollView style={styles.container}>
+      {/* SEÇÃO DE SOLICITAÇÕES */}
+      <Text style={styles.title}>Solicitações Pendentes</Text>
+      {solicitacoes.length === 0 && (
+        <Text style={{ color: "#aaa", marginBottom: 12 }}>
+          Nenhuma solicitação no momento.
+        </Text>
+      )}
+
+      {solicitacoes.map((s) => (
+        <View key={s.id} style={[styles.userCard, { borderColor: "#FFD700" }]}>
+          <Text style={[styles.email, { color: "#FFD700" }]}>
+            {s.email} (Solicitação)
+          </Text>
+          <View style={{ flexDirection: "row" }}>
+            <TouchableOpacity
+              style={[
+                styles.tornarBtn,
+                { backgroundColor: "#00c853", marginRight: 8 },
+              ]}
+              onPress={async () => {
+                await setDoc(doc(db, "administradores", s.uid), { uid: s.uid });
+                await deleteDoc(doc(db, "solicitacoesMestre", s.uid));
+                fetchMestres();
+                fetchSolicitacoes();
+              }}
+            >
+              <Text style={styles.btnText}>Aprovar</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.removerBtn, { backgroundColor: "#c62828" }]}
+              onPress={async () => {
+                await deleteDoc(doc(db, "solicitacoesMestre", s.uid));
+                fetchSolicitacoes();
+              }}
+            >
+              <Text style={styles.btnText}>Recusar</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      ))}
+
+      {/* SEÇÃO DE USUÁRIOS */}
       <Text style={styles.title}>Gerenciar Mestres</Text>
 
       <TextInput
