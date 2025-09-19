@@ -18,7 +18,7 @@ import {
 } from "firebase/firestore";
 import { auth, db } from "../services/firebase";
 
-const ROOT_ADMIN_UID = "W5grpvre76XJNRSISOAnKSky35j2"; // <- coloque aqui o UID fixo do admin raiz
+const ROOT_ADMIN_UID = "DIPyWdpxiHcS7tZXgOZXWABN5o72"; // <- coloque aqui o UID fixo do admin raiz
 
 export default function Home({ navigation }) {
   const [sessoes, setSessoes] = useState([]);

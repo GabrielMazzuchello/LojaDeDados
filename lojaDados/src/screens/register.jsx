@@ -7,25 +7,38 @@ import {
   TouchableOpacity,
   Alert,
 } from "react-native";
-import { auth } from "../services/firebase";
+import { auth, db } from "../services/firebase"; // Importe o 'db'
 import { createUserWithEmailAndPassword } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore"; // Importe 'doc' e 'setDoc'
 
 const Register = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleRegister = async () => {
-    console.log("Botão Criar Conta pressionado");
-
     if (!email || !password) {
       Alert.alert("Erro", "Preencha todos os campos.");
       return;
     }
 
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = userCredential.user;
+
+      // --- AJUSTE AQUI ---
+      // Salva na sua coleção existente chamada "users"
+      // Se você não tiver um campo "nome", este código vai criá-lo.
+      await setDoc(doc(db, "users", user.uid), {
+        uid: user.uid,
+        email: user.email,
+        nome: user.email.split("@")[0], // Cria o campo "nome"
+      });
+
       Alert.alert("Sucesso", "Usuário registrado com sucesso!");
-      console.log("Sucesso", "Usuário registrado com sucesso!");
       navigation.navigate("Login");
     } catch (error) {
       Alert.alert("Erro ao registrar", error.message);
@@ -65,6 +78,7 @@ const Register = ({ navigation }) => {
 
 export default Register;
 
+// Seus estilos permanecem os mesmos...
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -95,7 +109,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingVertical: 14,
     marginBottom: 15,
-    color: "#FF0068"
+    color: "#FF0068",
   },
   buttonText: {
     fontWeight: "bold",
