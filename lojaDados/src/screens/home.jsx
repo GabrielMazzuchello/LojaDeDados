@@ -5,6 +5,8 @@ import {
   ScrollView,
   TouchableOpacity,
   Image,
+  TextInput,
+  Alert,
 } from "react-native";
 import { useEffect, useState } from "react";
 import {
@@ -15,16 +17,36 @@ import {
   doc,
   arrayUnion,
   setDoc,
+  getDoc,
 } from "firebase/firestore";
 import { auth, db } from "../services/firebase";
 
-const ROOT_ADMIN_UID = "DIPyWdpxiHcS7tZXgOZXWABN5o72"; // <- coloque aqui o UID fixo do admin raiz
+const ROOT_ADMIN_UID = "DIPyWdpxiHcS7tZXgOZXWABN5o72";
 
 export default function Home({ navigation }) {
-  const [sessoes, setSessoes] = useState([]);
+  const [sessoesOriginais, setSessoesOriginais] = useState([]);
+  const [sessoesFiltradas, setSessoesFiltradas] = useState([]);
+  const [busca, setBusca] = useState("");
   const [uidAtual, setUidAtual] = useState(null);
   const [mestres, setMestres] = useState([]);
   const [solicitacaoStatus, setSolicitacaoStatus] = useState(null);
+
+  useEffect(() => {
+    if (busca === "") {
+      setSessoesFiltradas(sessoesOriginais);
+    } else {
+      const termoBusca = busca.toLowerCase();
+      const sessoesFiltradas = sessoesOriginais.filter((sessao) => {
+        const nomeSessao = sessao.nome ? sessao.nome.toLowerCase() : "";
+        const cidadeSessao = sessao.cidade ? sessao.cidade.toLowerCase() : "";
+
+        return (
+          nomeSessao.includes(termoBusca) || cidadeSessao.includes(termoBusca)
+        );
+      });
+      setSessoesFiltradas(sessoesFiltradas);
+    }
+  }, [busca, sessoesOriginais]);
 
   const verificarSolicitacao = async () => {
     try {
@@ -55,7 +77,7 @@ export default function Home({ navigation }) {
       });
 
       setSolicitacaoStatus("pendente");
-      alert("Solicitação enviada! Aguarde aprovação do administrador.");
+      Alert.alert("Sucesso", "Solicitação enviada! Aguarde aprovação.");
     } catch (err) {
       console.error("Erro ao solicitar mestre:", err);
     }
@@ -72,7 +94,7 @@ export default function Home({ navigation }) {
 
   const fetchMestres = async () => {
     try {
-      const snapshot = await getDocs(collection(db, "administradores")); // coleção de mestres
+      const snapshot = await getDocs(collection(db, "administradores"));
       const listaUIDs = snapshot.docs.map((doc) => doc.data().uid);
       setMestres(listaUIDs);
     } catch (error) {
@@ -93,19 +115,12 @@ export default function Home({ navigation }) {
         id: doc.id,
         ...doc.data(),
       }));
-      setSessoes(lista);
+      setSessoesOriginais(lista);
+      setSessoesFiltradas(lista);
     } catch (error) {
       console.error("Erro ao buscar sessões:", error);
     }
   };
-
-  useEffect(() => {
-    const fetchAll = async () => {
-      await fetchMestres();
-      await fetchData();
-    };
-    fetchAll();
-  }, []);
 
   const entrarNaSessao = async (idSessao, participantesAtuais) => {
     try {
@@ -114,12 +129,9 @@ export default function Home({ navigation }) {
       if (participantesAtuais.includes(user.uid)) return;
 
       const ref = doc(db, "sessoes", idSessao);
+      await updateDoc(ref, { participantes: arrayUnion(user.uid) });
 
-      await updateDoc(ref, {
-        participantes: arrayUnion(user.uid),
-      });
-
-      alert("Você entrou na sessão!");
+      Alert.alert("Sucesso", "Você entrou na sessão!");
       fetchData();
     } catch (error) {
       console.log("Erro ao entrar na sessão: ", error);
@@ -129,7 +141,7 @@ export default function Home({ navigation }) {
   const removerSessao = async (idSessao) => {
     try {
       await deleteDoc(doc(db, "sessoes", idSessao));
-      alert("Sessão removida com sucesso.");
+      Alert.alert("Sucesso", "Sessão removida com sucesso.");
       fetchData();
     } catch (error) {
       console.error("Erro ao remover sessão:", error);
@@ -138,9 +150,10 @@ export default function Home({ navigation }) {
 
   return (
     <View style={styles.container}>
+      {/* ===== INÍCIO DO CABEÇALHO COMPLETO ===== */}
       <View style={styles.topPage}>
         <View style={styles.divisionTopPage1}>
-          {(mestres.includes(uidAtual) || uidAtual == ROOT_ADMIN_UID) && (
+          {(mestres.includes(uidAtual) || uidAtual === ROOT_ADMIN_UID) && (
             <TouchableOpacity onPress={() => navigation.navigate("Adm")}>
               <Text style={styles.button}>Agendar Sessões</Text>
             </TouchableOpacity>
@@ -164,6 +177,7 @@ export default function Home({ navigation }) {
           )}
         </View>
       </View>
+
       <View style={styles.TopPage}>
         {!mestres.includes(uidAtual) &&
           uidAtual !== ROOT_ADMIN_UID &&
@@ -187,14 +201,29 @@ export default function Home({ navigation }) {
             </TouchableOpacity>
           )}
       </View>
+      {/* ===== FIM DO CABEÇALHO COMPLETO ===== */}
 
       <ScrollView showsVerticalScrollIndicator={false}>
         <TouchableOpacity onPress={fetchData} style={styles.refreshButton}>
-          <Text style={styles.refreshText}>🔄 Recarregar</Text>
+          <Text style={styles.refreshText}>🔄 Recarregar Sessões</Text>
         </TouchableOpacity>
 
+        <TextInput
+          style={styles.searchInput}
+          placeholder="Buscar por nome ou cidade..."
+          placeholderTextColor="#888"
+          value={busca}
+          onChangeText={setBusca}
+        />
+
         <View style={styles.middlePage}>
-          {sessoes.map((sessao) => (
+          {sessoesFiltradas.length === 0 && busca.length > 0 && (
+            <Text style={styles.nenhumResultado}>
+              Nenhuma sessão encontrada.
+            </Text>
+          )}
+
+          {sessoesFiltradas.map((sessao) => (
             <View key={sessao.id} style={styles.card}>
               <Text style={styles.cardTitle}>{sessao.nome}</Text>
               <Text style={styles.cardText}>Mestre: {sessao.mestre}</Text>
@@ -224,7 +253,7 @@ export default function Home({ navigation }) {
                   Você já está participando
                 </Text>
               )}
-              {(uidAtual == sessao.owner || uidAtual == ROOT_ADMIN_UID) && (
+              {(uidAtual === sessao.owner || uidAtual === ROOT_ADMIN_UID) && (
                 <TouchableOpacity
                   style={styles.removerButton}
                   onPress={() => removerSessao(sessao.id)}
@@ -252,6 +281,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row",
   },
+  TopPage: {
+    // Estilo para o container do botão "Solicitar Mestre"
+    marginVertical: 10,
+    marginHorizontal: 15,
+  },
   divisionTopPage1: {
     height: 140,
     width: 100,
@@ -278,6 +312,36 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#FF0068",
     textAlign: "center",
+    textAlignVertical: "center",
+  },
+  refreshButton: {
+    alignSelf: "center",
+    backgroundColor: "#222",
+    borderRadius: 10,
+    padding: 10,
+    marginBottom: 15,
+  },
+  refreshText: {
+    color: "#FF0068",
+    fontWeight: "bold",
+  },
+  searchInput: {
+    height: 50,
+    backgroundColor: "#111",
+    borderColor: "#FF0068",
+    borderWidth: 1,
+    borderRadius: 8,
+    paddingHorizontal: 15,
+    color: "#fff",
+    fontSize: 16,
+    marginBottom: 20,
+    marginHorizontal: 15,
+  },
+  nenhumResultado: {
+    color: "#888",
+    textAlign: "center",
+    fontSize: 16,
+    marginTop: 30,
   },
   middlePage: {
     paddingBottom: 30,
@@ -289,8 +353,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderColor: "#FF0068",
     borderWidth: 1,
-    paddingInline: 15,
-    marginInline: 15,
+    marginHorizontal: 15,
   },
   cardTitle: {
     fontSize: 20,
@@ -331,16 +394,5 @@ const styles = StyleSheet.create({
     fontStyle: "italic",
     marginTop: 10,
     textAlign: "center",
-  },
-  refreshButton: {
-    alignSelf: "center",
-    backgroundColor: "#222",
-    borderRadius: 10,
-    padding: 10,
-    marginBottom: 10,
-  },
-  refreshText: {
-    color: "#FF0068",
-    fontWeight: "bold",
   },
 });
