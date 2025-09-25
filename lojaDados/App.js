@@ -107,7 +107,7 @@ export default function App() {
           }}
         />
         <Stack.Screen
-          name="Mestre"
+          name="Adm"
           component={Adm}
           options={{
             headerStyle: {
@@ -117,7 +117,7 @@ export default function App() {
               borderBottomWidth: 0,
             },
             headerTintColor: "#FF0068",
-            headerTitle: "Adm",
+            headerTitle: "Mestre - Agendar Sessão",
           }}
         />
         <Stack.Screen

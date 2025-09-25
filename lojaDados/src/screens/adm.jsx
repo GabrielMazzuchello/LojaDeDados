@@ -15,6 +15,8 @@ const Adm = ({ navigation }) => {
   const [cenario, setCenario] = useState("");
   const [hora, setHora] = useState("");
   const [data, setData] = useState("");
+  const [cidade, setCidade] = useState("");
+  const [endereco, setEndereco] = useState("");
   const [local, setLocal] = useState("");
   const [imagem, setImagem] = useState("");
 
@@ -29,6 +31,8 @@ const Adm = ({ navigation }) => {
         cenario,
         data,
         hora,
+        cidade,
+        endereco,
         local,
         imagem,
         owner: user.uid,
@@ -85,6 +89,22 @@ const Adm = ({ navigation }) => {
           onChangeText={setData}
         />
       </View>
+
+      <TextInput
+        style={styles.input}
+        placeholder="Cidade"
+        placeholderTextColor="#4a5e49"
+        value={cidade}
+        onChangeText={setCidade}
+      />
+
+      <TextInput
+        style={styles.input}
+        placeholder="Endereço"
+        placeholderTextColor="#4a5e49"
+        value={endereco}
+        onChangeText={setEndereco}
+      />
 
       <TextInput
         style={styles.input}
