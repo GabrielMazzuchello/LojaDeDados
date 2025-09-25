@@ -18,9 +18,8 @@ import {
 } from "firebase/firestore";
 import { db, auth } from "../services/firebase";
 
-// O componente para estilizar a scrollbar continua o mesmo
 const ScrollbarStyle = () => {
-  if (Platform.OS !== 'web') {
+  if (Platform.OS !== "web") {
     return null;
   }
   const css = `
@@ -34,7 +33,7 @@ const ScrollbarStyle = () => {
     ::-webkit-scrollbar-thumb:hover { background-color: #cc0052; }
   `;
   useEffect(() => {
-    const styleElement = document.createElement('style');
+    const styleElement = document.createElement("style");
     styleElement.innerHTML = css;
     document.head.appendChild(styleElement);
     return () => {
@@ -51,7 +50,6 @@ const ChatScreen = ({ route }) => {
   const user = auth.currentUser;
   const scrollViewRef = useRef();
 
-  // Seus useEffects e a função enviarMensagem continuam perfeitos
   useEffect(() => {
     const mensagensRef = collection(db, "sessoes", sessaoId, "messages");
     const q = query(mensagensRef, orderBy("createdAt", "asc"));
@@ -84,8 +82,6 @@ const ChatScreen = ({ route }) => {
   return (
     <View style={styles.container}>
       <ScrollbarStyle />
-      
-      {/* A ScrollView agora é o item flexível que cresce */}
       <ScrollView
         style={styles.messageList}
         ref={scrollViewRef}
@@ -107,7 +103,6 @@ const ChatScreen = ({ route }) => {
         ))}
       </ScrollView>
 
-      {/* O input container não é flexível, então tem sua altura natural */}
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
@@ -131,7 +126,6 @@ const styles = StyleSheet.create({
   container: {
     height: "100vh",
     backgroundColor: "#000",
-    // Configura o container como uma coluna Flexbox
     display: "flex",
     flexDirection: "column",
   },
@@ -139,10 +133,9 @@ const styles = StyleSheet.create({
   messageList: {
     // A ScrollView vai crescer para ocupar todo o espaço disponível,
     // automaticamente "descontando" a altura do inputContainer.
-    flex: 1, 
+    flex: 1,
     overflowY: "auto",
   },
-  // O resto dos estilos continua igual
   mensagem: {
     padding: 10,
     marginVertical: 5,

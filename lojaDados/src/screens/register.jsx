@@ -29,9 +29,6 @@ const Register = ({ navigation }) => {
       );
       const user = userCredential.user;
 
-      // --- AJUSTE AQUI ---
-      // Salva na sua coleção existente chamada "users"
-      // Se você não tiver um campo "nome", este código vai criá-lo.
       await setDoc(doc(db, "users", user.uid), {
         uid: user.uid,
         email: user.email,
@@ -78,7 +75,6 @@ const Register = ({ navigation }) => {
 
 export default Register;
 
-// Seus estilos permanecem os mesmos...
 const styles = StyleSheet.create({
   container: {
     flex: 1,
