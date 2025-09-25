@@ -107,7 +107,7 @@ export default function App() {
           }}
         />
         <Stack.Screen
-          name="Adm"
+          name="Mestre"
           component={Adm}
           options={{
             headerStyle: {
