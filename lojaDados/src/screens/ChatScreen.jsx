@@ -18,6 +18,7 @@ import {
 } from "firebase/firestore";
 import { db, auth } from "../services/firebase";
 
+// O componente para estilizar a scrollbar continua o mesmo
 const ScrollbarStyle = () => {
   if (Platform.OS !== "web") {
     return null;
@@ -50,6 +51,7 @@ const ChatScreen = ({ route }) => {
   const user = auth.currentUser;
   const scrollViewRef = useRef();
 
+  // Seus useEffects e a função enviarMensagem continuam perfeitos
   useEffect(() => {
     const mensagensRef = collection(db, "sessoes", sessaoId, "messages");
     const q = query(mensagensRef, orderBy("createdAt", "asc"));
@@ -82,6 +84,8 @@ const ChatScreen = ({ route }) => {
   return (
     <View style={styles.container}>
       <ScrollbarStyle />
+
+      {/* A ScrollView agora é o item flexível que cresce */}
       <ScrollView
         style={styles.messageList}
         ref={scrollViewRef}
@@ -103,6 +107,7 @@ const ChatScreen = ({ route }) => {
         ))}
       </ScrollView>
 
+      {/* O input container não é flexível, então tem sua altura natural */}
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
@@ -124,8 +129,9 @@ export default ChatScreen;
 
 const styles = StyleSheet.create({
   container: {
-    height: "100vh",
+    height: "93vh",
     backgroundColor: "#000",
+    // Configura o container como uma coluna Flexbox
     display: "flex",
     flexDirection: "column",
   },
@@ -136,6 +142,7 @@ const styles = StyleSheet.create({
     flex: 1,
     overflowY: "auto",
   },
+  // O resto dos estilos continua igual
   mensagem: {
     padding: 10,
     marginVertical: 5,
