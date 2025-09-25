@@ -201,6 +201,8 @@ export default function Home({ navigation }) {
               <Text style={styles.cardText}>Sistema: {sessao.cenario}</Text>
               <Text style={styles.cardText}>Data: {sessao.data}</Text>
               <Text style={styles.cardText}>Hora: {sessao.hora}</Text>
+              <Text style={styles.cardText}>Cidade: {sessao.cidade}</Text>
+              <Text style={styles.cardText}>Endereço: {sessao.endereco}</Text>
               <Text style={styles.cardText}>Local: {sessao.local}</Text>
               {sessao.imagem && (
                 <Image
