@@ -128,6 +128,14 @@ const MySessions = ({ navigation }) => {
                   >
                     <Text style={{ color: "#fff" }}>Participantes</Text>
                   </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() =>
+                      navigation.navigate("ChatScreen", { sessaoId: sessao.id })
+                    }
+                    style={[styles.extra, { backgroundColor: "#0A5" }]}
+                  >
+                    <Text style={{ color: "#fff" }}>Chat</Text>
+                  </TouchableOpacity>
                 </View>
               </View>
             </View>

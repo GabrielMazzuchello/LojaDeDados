@@ -12,6 +12,7 @@ import Home from "./src/screens/home";
 import Adm from "./src/screens/adm";
 import MySessions from "./src/screens/mySessions";
 import GerenciarAdmins from "./src/screens/GerenciarAdmins";
+import ChatScreen from "./src/screens/ChatScreen"; // 🔹 importar a tela do chat
 
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
@@ -31,11 +32,11 @@ function HomeTabs() {
         headerStyle: { backgroundColor: "#a14" },
         headerTitleAlign: "center",
         tabBarStyle: {
-          backgroundColor: "red", // Cor de fundo da barra de abas
-          borderTopWidth: 0, // Remove a borda superior
-          borderBottomWidth: 0, // Remove a borda inferior
-          elevation: 0, // Remove qualquer sombra (Android)
-          shadowOpacity: 0, // Remove sombra (iOS)
+          backgroundColor: "red",
+          borderTopWidth: 0,
+          borderBottomWidth: 0,
+          elevation: 0,
+          shadowOpacity: 0,
         },
       }}
     >
@@ -137,6 +138,17 @@ export default function App() {
           name="HomeTabs"
           component={HomeTabs}
           options={{ headerShown: false }}
+        />
+
+        {/* 🔹 nova tela do chat */}
+        <Stack.Screen
+          name="ChatScreen"
+          component={ChatScreen}
+          options={{
+            headerStyle: { backgroundColor: "#000" },
+            headerTintColor: "#FF0068",
+            headerTitle: "Chat da Sessão",
+          }}
         />
       </Stack.Navigator>
     </NavigationContainer>
