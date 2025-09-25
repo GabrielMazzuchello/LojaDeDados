@@ -52,7 +52,7 @@ const MySessions = ({ navigation }) => {
     }
   };
 
-  // --- NOVA FUNÇÃO PARA BUSCAR OS NOMES DOS PARTICIPANTES ---
+  // Função para buscar os nomes dos participantes
   const buscarNomesParticipantes = async (uids) => {
     setCarregandoParticipantes(true);
     setParticipantesVisiveis([]); // Limpa a lista antiga
@@ -102,15 +102,18 @@ const MySessions = ({ navigation }) => {
                 <Image style={styles.image} source={{ uri: sessao.imagem }} />
               )}
               <View style={{ flex: 1, padding: 8 }}>
-                <Text style={styles.text}>Nome: {sessao.nome}</Text>
+                {/* Estilo e informações combinados */}
+                <Text style={styles.sessionName}>Nome: {sessao.nome}</Text>
                 <Text style={styles.text}>Mestre: {sessao.mestre}</Text>
                 <Text style={styles.text}>Sistema: {sessao.cenario}</Text>
                 <Text style={styles.text}>
                   Data: {sessao.data} - Hora: {sessao.hora}
                 </Text>
+                <Text style={styles.text}>Cidade: {sessao.cidade}</Text>
+                <Text style={styles.text}>Endereço: {sessao.endereco}</Text>
                 <Text style={styles.text}>Local: {sessao.local}</Text>
 
-                {/* --- BOTÕES NA HORIZONTAL --- */}
+                {/* Container com os 3 botões */}
                 <View style={styles.buttonContainer}>
                   <TouchableOpacity
                     onPress={() => sairDaSessao(sessao.id)}
@@ -119,7 +122,6 @@ const MySessions = ({ navigation }) => {
                     <Text style={{ color: "#fff" }}>Sair da sessão</Text>
                   </TouchableOpacity>
 
-                  {/* --- NOVO BOTÃO PARA VER PARTICIPANTES --- */}
                   <TouchableOpacity
                     onPress={() =>
                       buscarNomesParticipantes(sessao.participantes)
@@ -128,6 +130,7 @@ const MySessions = ({ navigation }) => {
                   >
                     <Text style={{ color: "#fff" }}>Participantes</Text>
                   </TouchableOpacity>
+
                   <TouchableOpacity
                     onPress={() =>
                       navigation.navigate("ChatScreen", { sessaoId: sessao.id })
@@ -143,7 +146,7 @@ const MySessions = ({ navigation }) => {
         )}
       </View>
 
-      {/* --- NOVO MODAL PARA EXIBIR A LISTA --- */}
+      {/* Modal para exibir a lista de participantes */}
       <Modal
         animationType="slide"
         transparent={true}
@@ -217,6 +220,13 @@ const styles = StyleSheet.create({
     fontSize: 15,
     marginBottom: 4,
   },
+  // Estilo combinado
+  sessionName: {
+    fontSize: 16,
+    color: "#FF0068",
+    fontWeight: "bold",
+    marginBottom: 5,
+  },
   extra: {
     backgroundColor: "#FF0068",
     borderRadius: 8,
@@ -227,10 +237,10 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flexDirection: "row",
-    justifyContent: "space-between", // Ou 'flex-start' com marginRight
+    justifyContent: "space-between",
     gap: 10, // Espaçamento entre os botões
   },
-  // --- NOVOS ESTILOS PARA O MODAL ---
+  // Estilos para o Modal
   modalContainer: {
     flex: 1,
     justifyContent: "center",
