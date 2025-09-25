@@ -90,21 +90,61 @@ const MySessions = ({ navigation }) => {
         ) : (
           sessoes.map((sessao) => (
             <View key={sessao.id} style={styles.card}>
-              {/* -- Parte de Cima: Imagem + Textos -- */}
               <View style={styles.topContainer}>
                 {sessao.imagem && (
                   <Image style={styles.image} source={{ uri: sessao.imagem }} />
                 )}
                 <View style={styles.textContainer}>
-                  <Text style={styles.sessionName}>Nome: {sessao.nome}</Text>
-                  <Text style={styles.text}>Mestre: {sessao.mestre}</Text>
-                  <Text style={styles.text}>Sistema: {sessao.cenario}</Text>
-                  <Text style={styles.text}>
+                  {/* <<< CONTROLE DE LARGURA APLICADO A TODOS OS TEXTOS >>> */}
+                  <Text
+                    style={styles.sessionName}
+                    numberOfLines={1}
+                    ellipsizeMode="tail"
+                  >
+                    Nome: {sessao.nome}
+                  </Text>
+                  <Text
+                    style={styles.text}
+                    numberOfLines={1}
+                    ellipsizeMode="tail"
+                  >
+                    Mestre: {sessao.mestre}
+                  </Text>
+                  <Text
+                    style={styles.text}
+                    numberOfLines={1}
+                    ellipsizeMode="tail"
+                  >
+                    Sistema: {sessao.cenario}
+                  </Text>
+                  <Text
+                    style={styles.text}
+                    numberOfLines={1}
+                    ellipsizeMode="tail"
+                  >
                     Data: {sessao.data} - Hora: {sessao.hora}
                   </Text>
-                  <Text style={styles.text}>Cidade: {sessao.cidade}</Text>
-                  <Text style={styles.text}>Endereço: {sessao.endereco}</Text>
-                  <Text style={styles.text}>Local: {sessao.local}</Text>
+                  <Text
+                    style={styles.text}
+                    numberOfLines={1}
+                    ellipsizeMode="tail"
+                  >
+                    Cidade: {sessao.cidade}
+                  </Text>
+                  <Text
+                    style={styles.text}
+                    numberOfLines={1}
+                    ellipsizeMode="tail"
+                  >
+                    Endereço: {sessao.endereco}
+                  </Text>
+                  <Text
+                    style={styles.text}
+                    numberOfLines={1}
+                    ellipsizeMode="tail"
+                  >
+                    Local: {sessao.local}
+                  </Text>
                 </View>
               </View>
 
@@ -113,13 +153,13 @@ const MySessions = ({ navigation }) => {
                   onPress={() => sairDaSessao(sessao.id)}
                   style={styles.extra}
                 >
-                  <Text style={{ color: "#fff" }}>Sair da sessão</Text>
+                  <Text style={styles.buttonText}>Sair da sessão</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => buscarNomesParticipantes(sessao.participantes)}
                   style={[styles.extra, { backgroundColor: "#33A" }]}
                 >
-                  <Text style={{ color: "#fff" }}>Participantes</Text>
+                  <Text style={styles.buttonText}>Participantes</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() =>
@@ -127,7 +167,7 @@ const MySessions = ({ navigation }) => {
                   }
                   style={[styles.extra, { backgroundColor: "#0A5" }]}
                 >
-                  <Text style={{ color: "#fff" }}>Chat</Text>
+                  <Text style={styles.buttonText}>Chat</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -159,7 +199,7 @@ const MySessions = ({ navigation }) => {
               style={[styles.extra, { marginTop: 20, alignSelf: "center" }]}
               onPress={() => setModalVisible(!modalVisible)}
             >
-              <Text style={{ color: "#fff" }}>Fechar</Text>
+              <Text style={styles.buttonText}>Fechar</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -195,8 +235,8 @@ const styles = StyleSheet.create({
     borderColor: "#FF0068",
     borderWidth: 1,
     overflow: "hidden",
+    width: "360px",
   },
-  
   topContainer: {
     flexDirection: "row",
     padding: 10,
@@ -205,9 +245,8 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     width: 125,
     height: 125,
-    borderRadius: 8, // Borda arredondada na imagem
+    borderRadius: 8,
   },
-  
   textContainer: {
     flex: 1,
     paddingLeft: 10,
@@ -229,13 +268,17 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     paddingVertical: 8,
     paddingHorizontal: 12,
+    // Garante que o botão não encolha
+    alignItems: "center",
   },
-  
+  buttonText: {
+    color: "#fff",
+  },
   buttonContainer: {
     flexDirection: "row",
-    justifyContent: "space-around", // Distribui os botões igualmente
+    justifyContent: "space-around",
     alignItems: "center",
-    backgroundColor: "#222", 
+    backgroundColor: "#222",
     paddingVertical: 10,
     borderTopWidth: 1,
     borderTopColor: "#FF0068",
