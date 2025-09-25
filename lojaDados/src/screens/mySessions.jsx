@@ -6,8 +6,8 @@ import {
   TouchableOpacity,
   Image,
   Alert,
-  Modal, // Importar o Modal
-  ActivityIndicator, // Para mostrar que está carregando
+  Modal,
+  ActivityIndicator,
 } from "react-native";
 import { useEffect, useState } from "react";
 import {
@@ -16,7 +16,7 @@ import {
   updateDoc,
   doc,
   arrayRemove,
-  getDoc, // Importar getDoc
+  getDoc,
 } from "firebase/firestore";
 import { db, auth } from "../services/firebase";
 
@@ -24,7 +24,6 @@ const MySessions = ({ navigation }) => {
   const [sessoes, setSessoes] = useState([]);
   const user = auth.currentUser;
 
-  // Estados para controlar o Modal
   const [modalVisible, setModalVisible] = useState(false);
   const [participantesVisiveis, setParticipantesVisiveis] = useState([]);
   const [carregandoParticipantes, setCarregandoParticipantes] = useState(false);
@@ -52,29 +51,22 @@ const MySessions = ({ navigation }) => {
     }
   };
 
-  // Função para buscar os nomes dos participantes
   const buscarNomesParticipantes = async (uids) => {
     setCarregandoParticipantes(true);
-    setParticipantesVisiveis([]); // Limpa a lista antiga
+    setParticipantesVisiveis([]);
     setModalVisible(true);
 
     try {
-      // Cria uma lista de promessas para buscar cada documento de usuário
       const promessasUsuarios = uids.map((uid) =>
         getDoc(doc(db, "users", uid))
       );
-
-      // Espera todas as buscas terminarem
       const snapshotsUsuarios = await Promise.all(promessasUsuarios);
-
-      // Mapeia os resultados para pegar o nome de cada usuário
       const nomes = snapshotsUsuarios.map((snapshot) => {
         if (snapshot.exists()) {
-          return snapshot.data().nome || "Nome não encontrado"; // Usa o campo 'nome'
+          return snapshot.data().nome || "Nome não encontrado";
         }
         return "Usuário desconhecido";
       });
-
       setParticipantesVisiveis(nomes);
     } catch (error) {
       console.error("Erro ao buscar participantes:", error);
@@ -98,55 +90,51 @@ const MySessions = ({ navigation }) => {
         ) : (
           sessoes.map((sessao) => (
             <View key={sessao.id} style={styles.card}>
-              {sessao.imagem && (
-                <Image style={styles.image} source={{ uri: sessao.imagem }} />
-              )}
-              <View style={{ flex: 1, padding: 8 }}>
-                {/* Estilo e informações combinados */}
-                <Text style={styles.sessionName}>Nome: {sessao.nome}</Text>
-                <Text style={styles.text}>Mestre: {sessao.mestre}</Text>
-                <Text style={styles.text}>Sistema: {sessao.cenario}</Text>
-                <Text style={styles.text}>
-                  Data: {sessao.data} - Hora: {sessao.hora}
-                </Text>
-                <Text style={styles.text}>Cidade: {sessao.cidade}</Text>
-                <Text style={styles.text}>Endereço: {sessao.endereco}</Text>
-                <Text style={styles.text}>Local: {sessao.local}</Text>
-
-                {/* Container com os 3 botões */}
-                <View style={styles.buttonContainer}>
-                  <TouchableOpacity
-                    onPress={() => sairDaSessao(sessao.id)}
-                    style={styles.extra}
-                  >
-                    <Text style={{ color: "#fff" }}>Sair da sessão</Text>
-                  </TouchableOpacity>
-
-                  <TouchableOpacity
-                    onPress={() =>
-                      buscarNomesParticipantes(sessao.participantes)
-                    }
-                    style={[styles.extra, { backgroundColor: "#33A" }]} // Cor diferente
-                  >
-                    <Text style={{ color: "#fff" }}>Participantes</Text>
-                  </TouchableOpacity>
-
-                  <TouchableOpacity
-                    onPress={() =>
-                      navigation.navigate("ChatScreen", { sessaoId: sessao.id })
-                    }
-                    style={[styles.extra, { backgroundColor: "#0A5" }]}
-                  >
-                    <Text style={{ color: "#fff" }}>Chat</Text>
-                  </TouchableOpacity>
+              {/* -- Parte de Cima: Imagem + Textos -- */}
+              <View style={styles.topContainer}>
+                {sessao.imagem && (
+                  <Image style={styles.image} source={{ uri: sessao.imagem }} />
+                )}
+                <View style={styles.textContainer}>
+                  <Text style={styles.sessionName}>Nome: {sessao.nome}</Text>
+                  <Text style={styles.text}>Mestre: {sessao.mestre}</Text>
+                  <Text style={styles.text}>Sistema: {sessao.cenario}</Text>
+                  <Text style={styles.text}>
+                    Data: {sessao.data} - Hora: {sessao.hora}
+                  </Text>
+                  <Text style={styles.text}>Cidade: {sessao.cidade}</Text>
+                  <Text style={styles.text}>Endereço: {sessao.endereco}</Text>
+                  <Text style={styles.text}>Local: {sessao.local}</Text>
                 </View>
+              </View>
+
+              <View style={styles.buttonContainer}>
+                <TouchableOpacity
+                  onPress={() => sairDaSessao(sessao.id)}
+                  style={styles.extra}
+                >
+                  <Text style={{ color: "#fff" }}>Sair da sessão</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => buscarNomesParticipantes(sessao.participantes)}
+                  style={[styles.extra, { backgroundColor: "#33A" }]}
+                >
+                  <Text style={{ color: "#fff" }}>Participantes</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate("ChatScreen", { sessaoId: sessao.id })
+                  }
+                  style={[styles.extra, { backgroundColor: "#0A5" }]}
+                >
+                  <Text style={{ color: "#fff" }}>Chat</Text>
+                </TouchableOpacity>
               </View>
             </View>
           ))
         )}
       </View>
 
-      {/* Modal para exibir a lista de participantes */}
       <Modal
         animationType="slide"
         transparent={true}
@@ -168,7 +156,7 @@ const MySessions = ({ navigation }) => {
               ))
             )}
             <TouchableOpacity
-              style={[styles.extra, { marginTop: 20 }]}
+              style={[styles.extra, { marginTop: 20, alignSelf: "center" }]}
               onPress={() => setModalVisible(!modalVisible)}
             >
               <Text style={{ color: "#fff" }}>Fechar</Text>
@@ -191,6 +179,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    paddingVertical: 10,
   },
   title: {
     fontSize: 32,
@@ -200,27 +189,35 @@ const styles = StyleSheet.create({
   },
   card: {
     backgroundColor: "#111",
-    flexDirection: "row",
     marginBottom: 20,
-    marginHorizontal: 10,
+    marginHorizontal: 15,
     borderRadius: 10,
     borderColor: "#FF0068",
     borderWidth: 1,
-    paddingInline: 15,
-    marginInline: 15,
     overflow: "hidden",
+  },
+  
+  topContainer: {
+    flexDirection: "row",
+    padding: 10,
   },
   image: {
     alignSelf: "center",
     width: 125,
     height: 125,
+    borderRadius: 8, // Borda arredondada na imagem
+  },
+  
+  textContainer: {
+    flex: 1,
+    paddingLeft: 10,
+    justifyContent: "center",
   },
   text: {
     color: "#fff",
     fontSize: 15,
     marginBottom: 4,
   },
-  // Estilo combinado
   sessionName: {
     fontSize: 16,
     color: "#FF0068",
@@ -232,20 +229,22 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     paddingVertical: 8,
     paddingHorizontal: 12,
-    marginTop: 8,
-    alignSelf: "flex-start",
   },
+  
   buttonContainer: {
     flexDirection: "row",
-    justifyContent: "space-between",
-    gap: 10, // Espaçamento entre os botões
+    justifyContent: "space-around", // Distribui os botões igualmente
+    alignItems: "center",
+    backgroundColor: "#222", 
+    paddingVertical: 10,
+    borderTopWidth: 1,
+    borderTopColor: "#FF0068",
   },
-  // Estilos para o Modal
   modalContainer: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.7)", // Fundo escurecido
+    backgroundColor: "rgba(0, 0, 0, 0.7)",
   },
   modalView: {
     margin: 20,
@@ -254,10 +253,7 @@ const styles = StyleSheet.create({
     padding: 35,
     alignItems: "center",
     shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
